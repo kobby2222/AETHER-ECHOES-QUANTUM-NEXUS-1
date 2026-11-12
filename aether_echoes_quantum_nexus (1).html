@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AETHER ECHOES: QUANTUM NEXUS - REMASTERED</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #020205;
+            color: #fff;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        .neon-glow-cyan { text-shadow: 0 0 10px #00f3ff, 0 0 25px #00f3ff, 0 0 40px #00f3ff; }
+        .neon-glow-pink { text-shadow: 0 0 10px #ff007f, 0 0 25px #ff007f, 0 0 40px #ff007f; }
+        .neon-glow-gold { text-shadow: 0 0 10px #fbbf24, 0 0 25px #fbbf24; }
+
+        .glass-panel {
+            background: rgba(8, 12, 24, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(5, 10, 20, 0.8); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.5); border-radius: 4px; }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between items-center relative select-none">
+
+    <!-- Top Futuristic Canvas HUD Overlay -->
+    <header id="topHud" class="w-full max-w-6xl flex justify-between items-center px-4 py-2 z-10 pointer-events-none mt-2 transition-opacity duration-300">
+        <!-- Health & Temporal Energy Bars -->
+        <div class="flex items-center gap-4 glass-panel px-4 py-2 rounded-2xl pointer-events-auto">
+            <div class="flex flex-col gap-1 w-36 sm:w-48">
+                <div class="flex justify-between text-[11px] font-orbitron font-bold text-cyan-300">
+                    <span>HULL VITALITY</span>
+                    <span id="hpText">100/100</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-cyan-500/40">
+                    <div id="hpBar" class="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 w-full transition-all duration-200"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1 w-32 sm:w-44">
+                <div class="flex justify-between text-[11px] font-orbitron font-bold text-pink-400">
+                    <span>TEMPORAL ENERGY</span>
+                    <span id="echoEnergyText">100%</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-pink-500/40">
+                    <div id="echoEnergyBar" class="h-full bg-gradient-to-r from-pink-500 to-purple-500 w-full transition-all duration-200"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Realm & Boss Info -->
+        <div id="realmBadge" class="hidden sm:flex flex-col items-center glass-panel px-6 py-1.5 rounded-2xl border-cyan-400/50">
+            <span id="realmTitle" class="text-xs font-orbitron font-extrabold tracking-widest text-cyan-300">REALM I: CHRONO VOID</span>
+            <span id="waveText" class="text-[10px] font-bold text-pink-400 font-mono tracking-wider">SECTOR WAVE 1/5</span>
+        </div>
+
+        <!-- Dust Coins & Controls -->
+        <div class="flex items-center gap-3 glass-panel px-4 py-2 rounded-2xl pointer-events-auto">
+            <div class="flex items-center gap-1.5 font-orbitron">
+                <span class="text-amber-400 text-sm">✨</span>
+                <span id="dustText" class="text-amber-300 font-bold text-sm sm:text-base">0</span>
+            </div>
+            <div class="h-6 w-px bg-slate-700/60"></div>
+            <button id="soundToggleBtn" class="px-2.5 py-1 bg-slate-900/80 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition">
+                🔊 Audio
+            </button>
+            <button id="pauseBtn" class="px-2.5 py-1 bg-slate-900/80 border border-cyan-500/40 rounded-lg text-xs font-bold text-cyan-400 hover:bg-cyan-950 transition">
+                PAUSE
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Game Viewport -->
+    <main class="relative w-full h-full flex-1 flex items-center justify-center p-0 sm:p-2">
+        <div class="relative w-full h-full max-w-[1280px] max-h-[720px] aspect-[16/9] bg-slate-950 rounded-none sm:rounded-3xl border-0 sm:border-2 border-cyan-500/40 shadow-[0_0_50px_rgba(0,243,255,0.2)] overflow-hidden flex items-center justify-center">
+            
+            <!-- Canvas Object -->
+            <canvas id="gameCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+
+            <!-- Ad Overlay Modal -->
+            <div id="adOverlay" class="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center z-40 hidden transition-all">
+                <div class="glass-panel p-6 rounded-3xl border-amber-400/60 max-w-md w-full flex flex-col items-center shadow-[0_0_50px_rgba(251,191,36,0.3)]">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xs font-orbitron font-bold text-amber-400 uppercase tracking-widest bg-amber-950/80 px-3 py-1 rounded-full border border-amber-400/40">QUANTUM RECOVER</span>
+                    </div>
+                    <h3 id="adTitle" class="text-xl font-bold font-orbitron text-white mb-2">CHRONO ENERGETICS</h3>
+                    <p id="adDescription" class="text-xs text-slate-300 font-mono mb-6">Recharging temporal core matrices...</p>
+                    
+                    <div class="w-full h-3 bg-slate-950 rounded-full border border-slate-700 overflow-hidden mb-4">
+                        <div id="adProgressBar" class="h-full bg-gradient-to-r from-amber-400 to-pink-500 w-0 transition-all duration-100"></div>
+                    </div>
+
+                    <div id="adTimerText" class="text-xs font-mono text-slate-400 mb-4">Channeling in <span id="adCountdown">5</span>s...</div>
+
+                    <button id="skipAdBtn" class="hidden w-full py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl font-orbitron text-xs font-bold text-slate-300 transition">
+                        CLOSE ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Temporal Timeline Scrubber HUD Overlay -->
+            <div id="timelineHud" class="absolute bottom-4 left-1/2 -translate-x-1/2 glass-panel px-6 py-2 rounded-full border-cyan-400/40 flex items-center gap-3 text-xs font-orbitron text-cyan-300 pointer-events-none opacity-0 transition-opacity">
+                <span>[SPACE] TEMPORAL ECHO</span>
+                <div class="w-36 sm:w-56 h-2 bg-slate-950 rounded-full overflow-hidden border border-cyan-500/40">
+                    <div id="timelineScrubber" class="h-full bg-cyan-400 w-0 transition-all duration-75"></div>
+                </div>
+                <span class="text-[10px] text-pink-400">5.0s HISTORY</span>
+            </div>
+
+            <!-- UI Overlay Screens (Main Menu / Upgrades / Game Over) -->
+            <div id="overlayScreen" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-30 transition-all duration-300">
+                
+                <!-- MAIN MENU -->
+                <div id="mainMenuView" class="flex flex-col items-center max-w-lg w-full">
+                    <h1 class="text-3xl sm:text-5xl font-black font-orbitron text-cyan-400 neon-glow-cyan mb-1">AETHER ECHOES</h1>
+                    <p class="text-xs sm:text-sm font-bold font-orbitron text-pink-500 neon-glow-pink tracking-widest mb-6">QUANTUM NEXUS - REMASTERED</p>
+
+                    <div class="flex flex-col gap-3 w-full mb-6">
+                        <button id="startCampaignBtn" class="py-4 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 font-black font-orbitron text-xs sm:text-sm rounded-2xl shadow-[0_0_25px_rgba(0,243,255,0.4)] hover:brightness-110 active:scale-95 transition-all">
+                            ENTER CAMPAIGN MATRIX
+                        </button>
+
+                        <button id="startSurvivalBtn" class="py-3.5 bg-slate-900 border border-pink-500/60 text-pink-400 font-extrabold font-orbitron text-xs rounded-2xl hover:bg-pink-950/40 active:scale-95 transition-all">
+                            ENDLESS SURVIVAL WAVE MODE
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 w-full">
+                        <button id="openUpgradesBtn" class="py-3 bg-slate-900/90 border border-amber-400/60 text-amber-300 font-bold font-orbitron text-xs rounded-xl hover:bg-amber-950/30 transition">
+                            ✨ SKILL TREE & UPGRADES
+                        </button>
+                        <button id="openControlsBtn" class="py-3 bg-slate-900/90 border border-slate-700 text-slate-300 font-bold font-orbitron text-xs rounded-xl hover:bg-slate-800 transition">
+                            🎮 CONTROLS & HOW TO PLAY
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SKILL TREE & UPGRADES VIEW -->
+                <div id="upgradesView" class="hidden flex-col items-center max-w-xl w-full">
+                    <h2 class="text-2xl font-black font-orbitron text-amber-400 neon-glow-gold mb-1">QUANTUM SKILL MATRIX</h2>
+                    <p class="text-xs font-mono text-slate-300 mb-4">Spend Nexus Dust earned from defeating cosmic entities.</p>
+
+                    <div id="upgradesContainer" class="flex flex-col gap-2.5 w-full max-h-[300px] overflow-y-auto mb-5 p-2 bg-slate-950/60 rounded-2xl border border-slate-800">
+                        <!-- Upgrades injected via JS -->
+                    </div>
+
+                    <button id="closeUpgradesBtn" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold font-orbitron text-xs rounded-xl">
+                        RETURN TO MENU
+                    </button>
+                </div>
+
+                <!-- CONTROLS VIEW -->
+                <div id="controlsView" class="hidden flex-col items-center max-w-lg w-full text-left">
+                    <h2 class="text-2xl font-black font-orbitron text-cyan-400 mb-4 text-center">PILOT CONTROLS</h2>
+
+                    <div class="glass-panel p-4 rounded-2xl w-full flex flex-col gap-3 font-mono text-xs mb-5">
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-cyan-400 font-bold">[WASD] / [Arrows]</span>
+                            <span class="text-slate-300">Omni-directional Thrusters</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-cyan-400 font-bold">[Left Mouse Click]</span>
+                            <span class="text-slate-300">Fire Plasma Blasters</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-pink-400 font-bold">[SPACEBAR]</span>
+                            <span class="text-slate-300">Summon Temporal Echo Shadow (Replays actions)</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-amber-400 font-bold">[SHIFT]</span>
+                            <span class="text-slate-300">Quantum Dash Teleport</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-emerald-400 font-bold">[E]</span>
+                            <span class="text-slate-300">Trigger Stasis Time Freeze</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-purple-400 font-bold">[Q]</span>
+                            <span class="text-slate-300">Activate Aegis Invulnerability Shield</span>
+                        </div>
+                    </div>
+
+                    <button id="closeControlsBtn" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold font-orbitron text-xs rounded-xl text-center">
+                        BACK TO MENU
+                    </button>
+                </div>
+
+                <!-- GAME OVER VIEW -->
+                <div id="gameOverView" class="hidden flex-col items-center max-w-md w-full">
+                    <h2 id="gameOverTitle" class="text-3xl font-black font-orbitron text-pink-500 neon-glow-pink mb-1">QUANTUM COLLAPSE</h2>
+                    <p class="text-xs font-mono text-slate-400 mb-4">HULL INTEGRITY spinout</p>
+
+                    <div class="w-full glass-panel p-4 rounded-2xl mb-5 flex flex-col gap-2 font-mono text-xs text-left">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Entities Destroyed:</span>
+                            <span id="finalKillsText" class="text-cyan-400 font-bold">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Temporal Echoes Summoned:</span>
+                            <span id="finalEchoesText" class="text-pink-400 font-bold">0</span>
+                        </div>
+                        <div class="flex justify-between border-t border-slate-800 pt-2">
+                            <span class="text-slate-400">Nexus Dust Collected:</span>
+                            <span id="finalDustText" class="text-amber-400 font-bold">0</span>
+                        </div>
+                    </div>
+
+                    <button id="retryBtn" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-teal-500 text-slate-950 font-black font-orbitron text-xs rounded-xl shadow-[0_0_20px_#00f3ff] active:scale-95 transition-all">
+                        RE-ENTER QUANTUM MATRIX
+                    </button>
+
+                    <button id="rewardedAdBtn" class="w-full mt-3 py-3 bg-gradient-to-r from-amber-400 to-pink-500 text-slate-950 font-extrabold font-orbitron text-xs rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <span>✨ REGENERATE HULL (+50 DUST & REVIVE)</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Controls -->
+    <footer id="mobileControls" class="w-full max-w-4xl flex justify-between items-center px-4 py-2 sm:hidden pointer-events-none z-20 mb-2">
+        <div id="joystickMove" class="w-24 h-24 bg-slate-900/60 border border-cyan-500/30 rounded-full pointer-events-auto flex items-center justify-center relative touch-none">
+            <div id="joystickStick" class="w-8 h-8 bg-cyan-400 rounded-full opacity-60"></div>
+        </div>
+
+        <div class="flex gap-2 pointer-events-auto">
+            <button id="touchAbilityBtn" class="w-14 h-14 bg-amber-500/80 border border-amber-300 rounded-2xl text-slate-950 font-orbitron font-extrabold text-xs">STASIS</button>
+            <button id="touchEchoBtn" class="w-16 h-16 bg-pink-600/90 border border-pink-300 rounded-full text-white font-orbitron font-extrabold text-xs shadow-lg shadow-pink-500/40">ECHO</button>
+        </div>
+    </footer>
+
+    <!-- Audio Synthesizer & Game Logic -->
+    <script>
+        // --- Sound Engine ---
+        class QuantumAudioEngine {
+            constructor() {
+                this.ctx = null;
+                this.enabled = true;
+                this.bgMusicOsc = null;
+                this.bgGain = null;
+            }
+
+            init() {
+                if (this.ctx) return;
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                this.ctx = new AudioCtx();
+                this.startAmbientSynth();
+            }
+
+            startAmbientSynth() {
+                if (!this.ctx || this.bgMusicOsc) return;
+                try {
+                    this.bgMusicOsc = this.ctx.createOscillator();
+                    this.bgGain = this.ctx.createGain();
+                    
+                    this.bgMusicOsc.type = 'sawtooth';
+                    this.bgMusicOsc.frequency.setValueAtTime(55, this.ctx.currentTime); // Low A
+
+                    const filter = this.ctx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(220, this.ctx.currentTime);
+
+                    this.bgGain.gain.setValueAtTime(0.03, this.ctx.currentTime);
+
+                    this.bgMusicOsc.connect(filter);
+                    filter.connect(this.bgGain);
+                    this.bgGain.connect(this.ctx.destination);
+                    this.bgMusicOsc.start();
+                } catch(e) {}
+            }
+
+            playLaser() {
+                if (!this.enabled || !this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(850, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.12);
+            }
+
+            playExplosion() {
+                if (!this.enabled || !this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(130, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(30, this.ctx.currentTime + 0.35);
+                gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.35);
+            }
+
+            playEchoRewind() {
+                if (!this.enabled || !this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(180, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1400, this.ctx.currentTime + 0.45);
+                gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.45);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.45);
+            }
+
+            playPickup() {
+                if (!this.enabled || !this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
+                osc.frequency.setValueAtTime(659.25, this.ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.2);
+            }
+        }
+
+        const audio = new QuantumAudioEngine();
+
+        // --- Ad SDK Manager Framework ---
+        class AdManagerSDK {
+            constructor() {
+                this.adActive = false;
+                this.adTimer = null;
+                this.onCompleteCallback = null;
+            }
+
+            showInterstitial(onComplete) {
+                this.startAd("QUANTUM NEXUS - PREVIEW", "Experience high-octane synthwave action across multi-realms!", 3, false, onComplete);
+            }
+
+            showRewarded(onRewardGiven) {
+                this.startAd("NEXUS CORE REGENERATOR", "Recharging hull matrices +50 Nexus Dust!", 4, true, onRewardGiven);
+            }
+
+            startAd(title, desc, durationSec, isRewarded, callback) {
+                if (this.adActive) return;
+                this.adActive = true;
+                this.onCompleteCallback = callback;
+
+                if (isRunning && !isPaused) isPaused = true;
+
+                const overlay = document.getElementById('adOverlay');
+                const progressBar = document.getElementById('adProgressBar');
+                const countdownText = document.getElementById('adCountdown');
+                const skipBtn = document.getElementById('skipAdBtn');
+
+                document.getElementById('adTitle').textContent = title;
+                document.getElementById('adDescription').textContent = desc;
+                
+                overlay.classList.remove('hidden');
+                skipBtn.classList.add('hidden');
+                progressBar.style.width = '0%';
+
+                let elapsed = 0;
+                let remaining = durationSec;
+                countdownText.textContent = remaining;
+
+                this.adTimer = setInterval(() => {
+                    elapsed += 0.1;
+                    remaining = Math.max(0, Math.ceil(durationSec - elapsed));
+                    countdownText.textContent = remaining;
+                    progressBar.style.width = `${(elapsed / durationSec) * 100}%`;
+
+                    if (elapsed >= durationSec) {
+                        clearInterval(this.adTimer);
+                        if (!isRewarded) {
+                            skipBtn.classList.remove('hidden');
+                            skipBtn.textContent = "CLOSE ✕";
+                        } else {
+                            this.closeAd(true);
+                        }
+                    }
+                }, 100);
+
+                skipBtn.onclick = () => { this.closeAd(true); };
+            }
+
+            closeAd(rewardGranted = false) {
+                clearInterval(this.adTimer);
+                this.adActive = false;
+                document.getElementById('adOverlay').classList.add('hidden');
+
+                if (this.onCompleteCallback) {
+                    this.onCompleteCallback(rewardGranted);
+                    this.onCompleteCallback = null;
+                }
+            }
+        }
+
+        const adSDK = new AdManagerSDK();
+
+        // --- Canvas Setup ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const CANVAS_WIDTH = 1280;
+        const CANVAS_HEIGHT = 720;
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
+
+        // --- Upgrades Matrix System ---
+        const UPGRADES = [
+            { id: 'dualBlasters', title: 'Dual Phase Blasters', cost: 15, level: 0, max: 1, desc: 'Fires twin plasma bolts simultaneously.' },
+            { id: 'echoDuration', title: 'Extended Echo Shadow', cost: 20, level: 0, max: 3, desc: 'Increases Echo recording window by +2 seconds.' },
+            { id: 'shieldGen', title: 'Aegis Shield Matrix', cost: 30, level: 0, max: 1, desc: 'Unlocks press [Q] for temporary invulnerability shield.' },
+            { id: 'stasisBlast', title: 'Stasis Time Pulse', cost: 25, level: 0, max: 1, desc: 'Unlocks press [E] to freeze all nearby enemies in time.' },
+            { id: 'dashPulse', title: 'Quantum Teleport Dash', cost: 35, level: 0, max: 1, desc: 'Unlocks press [SHIFT] to dash through enemies.' }
+        ];
+
+        let nexusDust = parseInt(localStorage.getItem('aether_dust')) || 0;
+        document.getElementById('dustText').textContent = nexusDust;
+
+        // --- Game State Variables ---
+        let gameMode = 'CAMPAIGN'; // 'CAMPAIGN' or 'SURVIVAL'
+        let currentRealm = 1;
+        let currentWave = 1;
+        let isRunning = false;
+        let isPaused = false;
+        let killCount = 0;
+        let echoCount = 0;
+
+        let mouseX = CANVAS_WIDTH / 2;
+        let mouseY = CANVAS_HEIGHT / 2;
+        let keys = {};
+
+        // History buffer for Echo Rewind
+        let playerHistory = [];
+        let maxHistoryFrames = 300; 
+
+        // Active Game Entities
+        let player = null;
+        let temporalEchoes = [];
+        let projectiles = [];
+        let enemies = [];
+        let particles = [];
+        let dustPickups = [];
+
+        // --- Player Class ---
+        class Player {
+            constructor() {
+                this.x = CANVAS_WIDTH / 2;
+                this.y = CANVAS_HEIGHT / 2;
+                this.radius = 18;
+                this.speed = 4.8;
+                this.hp = 100;
+                this.maxHp = 100;
+                this.echoEnergy = 100;
+                this.maxEchoEnergy = 100;
+                this.shootCooldown = 0;
+                this.shieldTimer = 0;
+                this.stasisCooldown = 0;
+                this.dashTimer = 0;
+            }
+
+            update() {
+                // Movement
+                let dx = 0, dy = 0;
+                if (keys['KeyW'] || keys['ArrowUp']) dy -= 1;
+                if (keys['KeyS'] || keys['ArrowDown']) dy += 1;
+                if (keys['KeyA'] || keys['ArrowLeft']) dx -= 1;
+                if (keys['KeyD'] || keys['ArrowRight']) dx += 1;
+
+                if (dx !== 0 && dy !== 0) {
+                    dx *= 0.7071;
+                    dy *= 0.7071;
+                }
+
+                const speedMult = this.dashTimer > 0 ? 3.0 : 1.0;
+                this.x = Math.max(this.radius, Math.min(CANVAS_WIDTH - this.radius, this.x + dx * this.speed * speedMult));
+                this.y = Math.max(this.radius, Math.min(CANVAS_HEIGHT - this.radius, this.y + dy * this.speed * speedMult));
+
+                // Cooldowns
+                if (this.shootCooldown > 0) this.shootCooldown--;
+                if (this.shieldTimer > 0) this.shieldTimer--;
+                if (this.stasisCooldown > 0) this.stasisCooldown--;
+                if (this.dashTimer > 0) this.dashTimer--;
+
+                // Recharge Echo Energy
+                if (this.echoEnergy < this.maxEchoEnergy) {
+                    this.echoEnergy = Math.min(this.maxEchoEnergy, this.echoEnergy + 0.18);
+                }
+
+                // Record state history for Temporal Echoes
+                playerHistory.push({
+                    x: this.x,
+                    y: this.y,
+                    angle: Math.atan2(mouseY - this.y, mouseX - this.x),
+                    shooting: keys['MouseLeft'] && this.shootCooldown === 0
+                });
+
+                if (playerHistory.length > maxHistoryFrames) {
+                    playerHistory.shift();
+                }
+
+                if (keys['MouseLeft'] && this.shootCooldown === 0) {
+                    this.shoot();
+                }
+            }
+
+            shoot() {
+                const angle = Math.atan2(mouseY - this.y, mouseX - this.x);
+                const hasDual = UPGRADES.find(u => u.id === 'dualBlasters').level > 0;
+
+                if (hasDual) {
+                    projectiles.push(new Projectile(this.x + Math.cos(angle + 0.2) * 15, this.y + Math.sin(angle + 0.2) * 15, angle, '#00f3ff', true));
+                    projectiles.push(new Projectile(this.x + Math.cos(angle - 0.2) * 15, this.y + Math.sin(angle - 0.2) * 15, angle, '#00f3ff', true));
+                } else {
+                    projectiles.push(new Projectile(this.x + Math.cos(angle) * 15, this.y + Math.sin(angle) * 15, angle, '#00f3ff', true));
+                }
+
+                this.shootCooldown = 11;
+                audio.playLaser();
+            }
+
+            draw() {
+                const angle = Math.atan2(mouseY - this.y, mouseX - this.x);
+
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(angle);
+
+                // Shield Aura
+                if (this.shieldTimer > 0) {
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 4;
+                    ctx.shadowColor = '#10b981';
+                    ctx.shadowBlur = 15;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.radius + 8, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                // Dash Effect
+                if (this.dashTimer > 0) {
+                    ctx.shadowColor = '#38bdf8';
+                    ctx.shadowBlur = 25;
+                }
+
+                // Ship Body
+                ctx.shadowColor = '#00f3ff';
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = '#00f3ff';
+                ctx.beginPath();
+                ctx.moveTo(this.radius, 0);
+                ctx.lineTo(-this.radius * 0.8, -this.radius * 0.7);
+                ctx.lineTo(-this.radius * 0.4, 0);
+                ctx.lineTo(-this.radius * 0.8, this.radius * 0.7);
+                ctx.closePath();
+                ctx.fill();
+
+                // Core Thruster Glow
+                ctx.fillStyle = '#ff007f';
+                ctx.beginPath();
+                ctx.arc(-this.radius * 0.6, 0, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // --- Temporal Shadow (Echo Clone) Class ---
+        class TemporalShadow {
+            constructor(actionsHistory) {
+                this.history = [...actionsHistory];
+                this.frameIndex = 0;
+                this.x = this.history[0]?.x || player.x;
+                this.y = this.history[0]?.y || player.y;
+                this.radius = 16;
+                this.expired = false;
+            }
+
+            update() {
+                if (this.frameIndex >= this.history.length) {
+                    this.expired = true;
+                    return;
+                }
+
+                const state = this.history[this.frameIndex];
+                this.x = state.x;
+                this.y = state.y;
+
+                if (state.shooting) {
+                    projectiles.push(new Projectile(this.x + Math.cos(state.angle) * 15, this.y + Math.sin(state.angle) * 15, state.angle, '#ff007f', true));
+                    audio.playLaser();
+                }
+
+                this.frameIndex++;
+            }
+
+            draw() {
+                const state = this.history[this.frameIndex] || this.history[this.history.length - 1];
+                if (!state) return;
+
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(state.angle);
+
+                ctx.shadowColor = '#ff007f';
+                ctx.shadowBlur = 18;
+                ctx.fillStyle = 'rgba(255, 0, 127, 0.75)';
+                ctx.beginPath();
+                ctx.moveTo(this.radius, 0);
+                ctx.lineTo(-this.radius * 0.8, -this.radius * 0.7);
+                ctx.lineTo(-this.radius * 0.4, 0);
+                ctx.lineTo(-this.radius * 0.8, this.radius * 0.7);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // --- Projectile Class ---
+        class Projectile {
+            constructor(x, y, angle, color, isFriendly) {
+                this.x = x;
+                this.y = y;
+                this.angle = angle;
+                this.speed = isFriendly ? 12 : 6;
+                this.color = color;
+                this.isFriendly = isFriendly;
+                this.radius = 4;
+                this.markedForDeletion = false;
+            }
+
+            update() {
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+
+                if (this.x < 0 || this.x > CANVAS_WIDTH || this.y < 0 || this.y > CANVAS_HEIGHT) {
+                    this.markedForDeletion = true;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 10;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // --- Enemy Class ---
+        class Enemy {
+            constructor(type, x, y) {
+                this.type = type; // 'DRONE', 'STALKER', 'BOSS'
+                this.x = x;
+                this.y = y;
+                this.radius = type === 'DRONE' ? 14 : (type === 'STALKER' ? 18 : 55);
+                this.hp = type === 'DRONE' ? 20 : (type === 'STALKER' ? 45 : 650);
+                this.maxHp = this.hp;
+                this.speed = type === 'DRONE' ? 2.8 : (type === 'STALKER' ? 1.8 : 0.8);
+                this.color = type === 'DRONE' ? '#a855f7' : (type === 'STALKER' ? '#ef4444' : '#fbbf24');
+                this.stasisTimer = 0;
+                this.shootCooldown = 0;
+                this.markedForDeletion = false;
+            }
+
+            update() {
+                if (this.stasisTimer > 0) {
+                    this.stasisTimer--;
+                    return;
+                }
+
+                let target = player;
+                let minDist = Math.hypot(player.x - this.x, player.y - this.y);
+
+                temporalEchoes.forEach(echo => {
+                    const d = Math.hypot(echo.x - this.x, echo.y - this.y);
+                    if (d < minDist) {
+                        minDist = d;
+                        target = echo;
+                    }
+                });
+
+                const angle = Math.atan2(target.y - this.y, target.x - this.x);
+                this.x += Math.cos(angle) * this.speed;
+                this.y += Math.sin(angle) * this.speed;
+
+                // Boss attack patterns
+                if (this.type === 'BOSS') {
+                    if (this.shootCooldown-- <= 0) {
+                        for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                            projectiles.push(new Projectile(this.x, this.y, a, '#fbbf24', false));
+                        }
+                        this.shootCooldown = 80;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = this.stasisTimer > 0 ? 25 : 12;
+                ctx.fillStyle = this.stasisTimer > 0 ? '#38bdf8' : this.color;
+
+                if (this.type === 'BOSS') {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Boss Health Bar ring
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius + 8, 0, (Math.PI * 2) * (this.hp / this.maxHp));
+                    ctx.stroke();
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // --- Dust Pickup Class ---
+        class DustPickup {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 6;
+                this.markedForDeletion = false;
+            }
+
+            update() {
+                const dist = Math.hypot(player.x - this.x, player.y - this.y);
+                if (dist < 120) {
+                    const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                    this.x += Math.cos(angle) * 6;
+                    this.y += Math.sin(angle) * 6;
+                }
+                if (dist < player.radius + this.radius) {
+                    nexusDust += 1;
+                    localStorage.setItem('aether_dust', nexusDust);
+                    document.getElementById('dustText').textContent = nexusDust;
+                    audio.playPickup();
+                    this.markedForDeletion = true;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.shadowColor = '#fbbf24';
+                ctx.shadowBlur = 10;
+                ctx.fillStyle = '#fbbf24';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // --- Particles Engine ---
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 1 + Math.random() * 4;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.life = 1.0;
+                this.decay = 0.03 + Math.random() * 0.03;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y, color, count = 16) {
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        // --- Temporal Echo Rewind Trigger ---
+        function triggerEchoRewind() {
+            if (player.echoEnergy < 50 || playerHistory.length < 30) return;
+
+            player.echoEnergy -= 50;
+            audio.playEchoRewind();
+
+            temporalEchoes.push(new TemporalShadow(playerHistory));
+            echoCount++;
+
+            createExplosion(player.x, player.y, '#ff007f', 24);
+
+            const scrubber = document.getElementById('timelineScrubber');
+            scrubber.className = "h-full bg-pink-500 w-full transition-all duration-300";
+            setTimeout(() => { scrubber.className = "h-full bg-cyan-400 w-0 transition-all duration-75"; }, 300);
+        }
+
+        function triggerStasisBlast() {
+            const upg = UPGRADES.find(u => u.id === 'stasisBlast');
+            if (!upg || upg.level === 0 || player.stasisCooldown > 0) return;
+
+            player.stasisCooldown = 360;
+            createExplosion(player.x, player.y, '#38bdf8', 30);
+            enemies.forEach(e => { e.stasisTimer = 180; });
+            audio.playEchoRewind();
+        }
+
+        function triggerAegisShield() {
+            const upg = UPGRADES.find(u => u.id === 'shieldGen');
+            if (!upg || upg.level === 0 || player.shieldTimer > 0) return;
+
+            player.shieldTimer = 180;
+            audio.playPickup();
+        }
+
+        function triggerDashPulse() {
+            const upg = UPGRADES.find(u => u.id === 'dashPulse');
+            if (!upg || upg.level === 0 || player.dashTimer > 0) return;
+
+            player.dashTimer = 15;
+            audio.playLaser();
+            createExplosion(player.x, player.y, '#38bdf8', 12);
+        }
+
+        // --- Wave & Enemy Spawner ---
+        function spawnWave() {
+            enemies = [];
+            if (gameMode === 'CAMPAIGN' && currentWave === 5) {
+                enemies.push(new Enemy('BOSS', CANVAS_WIDTH / 2, 120));
+                document.getElementById('waveText').textContent = "⚠️ BOSS ENTITY ENGAGED";
+                return;
+            }
+
+            const count = 4 + currentWave * 3;
+            for (let i = 0; i < count; i++) {
+                const side = Math.floor(Math.random() * 4);
+                let x = 0, y = 0;
+                if (side === 0) { x = Math.random() * CANVAS_WIDTH; y = -20; }
+                else if (side === 1) { x = CANVAS_WIDTH + 20; y = Math.random() * CANVAS_HEIGHT; }
+                else if (side === 2) { x = Math.random() * CANVAS_WIDTH; y = CANVAS_HEIGHT + 20; }
+                else { x = -20; y = Math.random() * CANVAS_HEIGHT; }
+
+                const type = Math.random() > 0.6 ? 'STALKER' : 'DRONE';
+                enemies.push(new Enemy(type, x, y));
+            }
+
+            document.getElementById('waveText').textContent = `SECTOR WAVE ${currentWave}/5`;
+        }
+
+        function resetGame(mode) {
+            gameMode = mode;
+            currentRealm = 1;
+            currentWave = 1;
+            killCount = 0;
+            echoCount = 0;
+
+            player = new Player();
+            playerHistory = [];
+            temporalEchoes = [];
+            projectiles = [];
+            enemies = [];
+            particles = [];
+            dustPickups = [];
+
+            const ext = UPGRADES.find(u => u.id === 'echoDuration').level;
+            maxHistoryFrames = 300 + ext * 120;
+
+            document.getElementById('hpBar').style.width = '100%';
+            document.getElementById('echoEnergyBar').style.width = '100%';
+            document.getElementById('timelineHud').classList.remove('opacity-0');
+            document.getElementById('overlayScreen').classList.add('opacity-0', 'pointer-events-none');
+
+            spawnWave();
+        }
+
+        function update() {
+            if (!isRunning || isPaused) return;
+
+            player.update();
+
+            for (let i = temporalEchoes.length - 1; i >= 0; i--) {
+                const echo = temporalEchoes[i];
+                echo.update();
+                if (echo.expired) temporalEchoes.splice(i, 1);
+            }
+
+            for (let i = projectiles.length - 1; i >= 0; i--) {
+                const p = projectiles[i];
+                p.update();
+                if (p.markedForDeletion) projectiles.splice(i, 1);
+            }
+
+            for (let i = dustPickups.length - 1; i >= 0; i--) {
+                const d = dustPickups[i];
+                d.update();
+                if (d.markedForDeletion) dustPickups.splice(i, 1);
+            }
+
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                const e = enemies[i];
+                e.update();
+
+                if (Math.hypot(e.x - player.x, e.y - player.y) < e.radius + player.radius) {
+                    if (player.shieldTimer <= 0 && player.dashTimer <= 0) {
+                        player.hp -= 0.8;
+                        if (player.hp <= 0) gameOver();
+                    }
+                }
+
+                for (let j = projectiles.length - 1; j >= 0; j--) {
+                    const p = projectiles[j];
+                    if (p.isFriendly && Math.hypot(e.x - p.x, e.y - p.y) < e.radius + p.radius) {
+                        e.hp -= 15;
+                        projectiles.splice(j, 1);
+                        createExplosion(p.x, p.y, e.color, 4);
+
+                        if (e.hp <= 0) {
+                            killCount++;
+                            audio.playExplosion();
+                            createExplosion(e.x, e.y, e.color, 18);
+                            dustPickups.push(new DustPickup(e.x, e.y));
+                            enemies.splice(i, 1);
+                            break;
+                        }
+                    } else if (!p.isFriendly && Math.hypot(player.x - p.x, player.y - p.y) < player.radius + p.radius) {
+                        if (player.shieldTimer <= 0 && player.dashTimer <= 0) {
+                            player.hp -= 10;
+                            if (player.hp <= 0) gameOver();
+                        }
+                        projectiles.splice(j, 1);
+                    }
+                }
+            }
+
+            if (enemies.length === 0) {
+                currentWave++;
+                if (currentWave > 5 && gameMode === 'CAMPAIGN') {
+                    currentRealm++;
+                    currentWave = 1;
+                }
+                spawnWave();
+            }
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                if (particles[i].life <= 0) particles.splice(i, 1);
+            }
+
+            document.getElementById('hpText').textContent = `${Math.ceil(Math.max(0, player.hp))}/${player.maxHp}`;
+            document.getElementById('hpBar').style.width = `${(player.hp / player.maxHp) * 100}%`;
+            document.getElementById('echoEnergyBar').style.width = `${(player.echoEnergy / player.maxEchoEnergy) * 100}%`;
+            document.getElementById('timelineScrubber').style.width = `${(playerHistory.length / maxHistoryFrames) * 100}%`;
+        }
+
+        function render() {
+            ctx.fillStyle = '#020205';
+            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+            ctx.strokeStyle = 'rgba(0, 243, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < CANVAS_WIDTH; x += 40) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, CANVAS_HEIGHT); ctx.stroke();
+            }
+            for (let y = 0; y < CANVAS_HEIGHT; y += 40) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(CANVAS_WIDTH, y); ctx.stroke();
+            }
+
+            dustPickups.forEach(d => d.draw());
+            projectiles.forEach(p => p.draw());
+            enemies.forEach(e => e.draw());
+            temporalEchoes.forEach(echo => echo.draw());
+            if (player) player.draw();
+            particles.forEach(p => p.draw());
+        }
+
+        function gameLoop() {
+            update();
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function gameOver() {
+            isRunning = false;
+            document.getElementById('finalKillsText').textContent = killCount;
+            document.getElementById('finalEchoesText').textContent = echoCount;
+            document.getElementById('finalDustText').textContent = `+${killCount * 2} ✨`;
+
+            adSDK.showInterstitial(() => {
+                document.getElementById('mainMenuView').classList.add('hidden');
+                document.getElementById('upgradesView').classList.add('hidden');
+                document.getElementById('controlsView').classList.add('hidden');
+                document.getElementById('gameOverView').classList.remove('hidden');
+                document.getElementById('overlayScreen').classList.remove('opacity-0', 'pointer-events-none');
+            });
+        }
+
+        document.getElementById('rewardedAdBtn').addEventListener('click', () => {
+            adSDK.showRewarded((rewarded) => {
+                if (rewarded) {
+                    nexusDust += 50;
+                    localStorage.setItem('aether_dust', nexusDust);
+                    document.getElementById('dustText').textContent = nexusDust;
+                    
+                    player.hp = player.maxHp;
+                    document.getElementById('hpBar').style.width = '100%';
+                    document.getElementById('overlayScreen').classList.add('opacity-0', 'pointer-events-none');
+                    isRunning = true;
+                    isPaused = false;
+                }
+            });
+        });
+
+        function renderUpgradesUI() {
+            const container = document.getElementById('upgradesContainer');
+            container.innerHTML = '';
+
+            UPGRADES.forEach(u => {
+                const item = document.createElement('div');
+                item.className = 'glass-panel p-3 rounded-xl flex justify-between items-center border-slate-700';
+                item.innerHTML = `
+                    <div>
+                        <div class="text-xs font-bold font-orbitron text-amber-300">${u.title} (${u.level}/${u.max})</div>
+                        <div class="text-[10px] text-slate-400 font-mono">${u.desc}</div>
+                    </div>
+                    <button class="buy-upgrade-btn px-3 py-1.5 rounded-lg font-orbitron text-xs font-bold ${u.level >= u.max ? 'bg-slate-800 text-slate-500' : 'bg-amber-400 text-slate-950 hover:bg-amber-300'}" data-id="${u.id}">
+                        ${u.level >= u.max ? 'MAX' : `✨ ${u.cost}`}
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+
+            container.querySelectorAll('.buy-upgrade-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const upg = UPGRADES.find(u => u.id === id);
+                    if (upg && upg.level < upg.max && nexusDust >= upg.cost) {
+                        nexusDust -= upg.cost;
+                        upg.level++;
+                        localStorage.setItem('aether_dust', nexusDust);
+                        document.getElementById('dustText').textContent = nexusDust;
+                        renderUpgradesUI();
+                    }
+                });
+            });
+        }
+
+        window.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left) * (CANVAS_WIDTH / rect.width);
+            mouseY = (e.clientY - rect.top) * (CANVAS_HEIGHT / rect.height);
+        });
+
+        window.addEventListener('mousedown', e => {
+            if (e.button === 0) keys['MouseLeft'] = true;
+        });
+
+        window.addEventListener('mouseup', e => {
+            if (e.button === 0) keys['MouseLeft'] = false;
+        });
+
+        window.addEventListener('keydown', e => {
+            keys[e.code] = true;
+            if (e.code === 'Space') triggerEchoRewind();
+            if (e.code === 'KeyE') triggerStasisBlast();
+            if (e.code === 'KeyQ') triggerAegisShield();
+            if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') triggerDashPulse();
+        });
+
+        window.addEventListener('keyup', e => { keys[e.code] = false; });
+
+        document.getElementById('startCampaignBtn').addEventListener('click', () => {
+            audio.init();
+            resetGame('CAMPAIGN');
+            isRunning = true;
+        });
+
+        document.getElementById('startSurvivalBtn').addEventListener('click', () => {
+            audio.init();
+            resetGame('SURVIVAL');
+            isRunning = true;
+        });
+
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            resetGame(gameMode);
+            isRunning = true;
+        });
+
+        document.getElementById('openUpgradesBtn').addEventListener('click', () => {
+            renderUpgradesUI();
+            document.getElementById('mainMenuView').classList.add('hidden');
+            document.getElementById('upgradesView').classList.remove('hidden');
+        });
+
+        document.getElementById('closeUpgradesBtn').addEventListener('click', () => {
+            document.getElementById('upgradesView').classList.add('hidden');
+            document.getElementById('mainMenuView').classList.remove('hidden');
+        });
+
+        document.getElementById('openControlsBtn').addEventListener('click', () => {
+            document.getElementById('mainMenuView').classList.add('hidden');
+            document.getElementById('controlsView').classList.remove('hidden');
+        });
+
+        document.getElementById('closeControlsBtn').addEventListener('click', () => {
+            document.getElementById('controlsView').classList.add('hidden');
+            document.getElementById('mainMenuView').classList.remove('hidden');
+        });
+
+        document.getElementById('soundToggleBtn').addEventListener('click', (e) => {
+            audio.enabled = !audio.enabled;
+            e.target.textContent = audio.enabled ? '🔊 Audio' : '🔇 Muted';
+        });
+
+        document.getElementById('touchEchoBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            triggerEchoRewind();
+        });
+
+        document.getElementById('touchAbilityBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            triggerStasisBlast();
+        });
+
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
