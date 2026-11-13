@@ -4,51 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AETHER ECHOES: QUANTUM NEXUS - REMASTERED</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Offline Self-Contained Reset & Base */
-        *, *::before, *::after {
+        * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
             user-select: none;
             -webkit-user-select: none;
         }
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Rajdhani', sans-serif;
             background-color: #020205;
-            color: #ffffff;
+            color: #fff;
             overflow: hidden;
-            touch-action: manipulation;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
+            touch-action: none;
         }
-        button {
-            cursor: pointer;
-            font-family: inherit;
-            color: inherit;
-            background: transparent;
-            border: none;
-        }
-
-        /* Offline Futuristic Typography & Neon Effects */
-        .font-orbitron {
-            font-family: 'Orbitron', 'Arial Black', 'Trebuchet MS', sans-serif;
-            letter-spacing: 0.04em;
-        }
-        .font-mono {
-            font-family: 'Consolas', 'Courier New', monospace;
-        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
         .neon-glow-cyan { text-shadow: 0 0 10px #00f3ff, 0 0 25px #00f3ff, 0 0 40px #00f3ff; }
         .neon-glow-pink { text-shadow: 0 0 10px #ff007f, 0 0 25px #ff007f, 0 0 40px #ff007f; }
         .neon-glow-gold { text-shadow: 0 0 10px #fbbf24, 0 0 25px #fbbf24; }
 
         .glass-panel {
-            background: rgba(8, 12, 24, 0.88);
+            background: rgba(8, 12, 24, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(0, 243, 255, 0.3);
@@ -58,289 +36,83 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(5, 10, 20, 0.8); }
         ::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.5); border-radius: 4px; }
-
-        /* Utility Replacements for Tailwind */
-        .hidden { display: none !important; }
-        .flex { display: flex; }
-        .grid { display: grid; }
-        .block { display: block; }
-        .flex-col { flex-direction: column; }
-        .flex-1 { flex: 1 1 0%; }
-        .items-center { align-items: center; }
-        .justify-center { justify-content: center; }
-        .justify-between { justify-content: space-between; }
-        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-        .gap-1 { gap: 0.25rem; }
-        .gap-1\.5 { gap: 0.375rem; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-2\.5 { gap: 0.625rem; }
-        .gap-3 { gap: 0.75rem; }
-        .gap-4 { gap: 1rem; }
-
-        .relative { position: relative; }
-        .absolute { position: absolute; }
-        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-        .bottom-4 { bottom: 1rem; }
-        .left-1\/2 { left: 50%; }
-        .-translate-x-1\/2 { transform: translateX(-50%); }
-
-        .z-10 { z-index: 10; }
-        .z-20 { z-index: 20; }
-        .z-30 { z-index: 30; }
-        .z-40 { z-index: 40; }
-
-        .pointer-events-none { pointer-events: none; }
-        .pointer-events-auto { pointer-events: auto; }
-        .touch-none { touch-action: none; }
-        .cursor-crosshair { cursor: crosshair; }
-
-        .w-full { width: 100%; }
-        .h-full { height: 100%; }
-        .w-px { width: 1px; }
-        .w-0 { width: 0%; }
-        .w-8 { width: 2rem; }
-        .w-14 { width: 3.5rem; }
-        .w-16 { width: 4rem; }
-        .w-24 { width: 6rem; }
-        .w-32 { width: 8rem; }
-        .w-36 { width: 9rem; }
-        .h-2 { height: 0.5rem; }
-        .h-2\.5 { height: 0.625rem; }
-        .h-3 { height: 0.75rem; }
-        .h-6 { height: 1.5rem; }
-        .h-8 { height: 2rem; }
-        .h-14 { height: 3.5rem; }
-        .h-16 { height: 4rem; }
-        .h-24 { height: 6rem; }
-        .max-w-md { max-width: 28rem; }
-        .max-w-lg { max-width: 32rem; }
-        .max-w-xl { max-width: 36rem; }
-        .max-w-4xl { max-width: 56rem; }
-        .max-w-6xl { max-width: 72rem; }
-        .max-w-\[1280px\] { max-width: 1280px; }
-        .max-h-\[720px\] { max-height: 720px; }
-        .max-h-\[300px\] { max-height: 300px; }
-        .aspect-\[16\/9\] { aspect-ratio: 16 / 9; }
-
-        .p-0 { padding: 0; }
-        .p-2 { padding: 0.5rem; }
-        .p-3 { padding: 0.75rem; }
-        .p-4 { padding: 1rem; }
-        .p-6 { padding: 1.5rem; }
-        .px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
-        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
-        .px-4 { padding-left: 1rem; padding-right: 1rem; }
-        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-        .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
-        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-        .py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
-        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-        .pt-2 { padding-top: 0.5rem; }
-        .pb-2 { padding-bottom: 0.5rem; }
-
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-3 { margin-top: 0.75rem; }
-        .mb-1 { margin-bottom: 0.25rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .mb-4 { margin-bottom: 1rem; }
-        .mb-5 { margin-bottom: 1.25rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-
-        .overflow-hidden { overflow: hidden; }
-        .overflow-y-auto { overflow-y: auto; }
-
-        .rounded-none { border-radius: 0; }
-        .rounded-lg { border-radius: 0.5rem; }
-        .rounded-xl { border-radius: 0.75rem; }
-        .rounded-2xl { border-radius: 1rem; }
-        .rounded-3xl { border-radius: 1.5rem; }
-        .rounded-full { border-radius: 9999px; }
-
-        .border { border-width: 1px; border-style: solid; }
-        .border-0 { border-width: 0; }
-        .border-t { border-top-width: 1px; border-top-style: solid; }
-        .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
-        .border-slate-600 { border-color: #475569; }
-        .border-slate-700 { border-color: #334155; }
-        .border-slate-800 { border-color: #1e293b; }
-        .border-cyan-400\/40 { border-color: rgba(34, 211, 238, 0.4); }
-        .border-cyan-400\/50 { border-color: rgba(34, 211, 238, 0.5); }
-        .border-cyan-500\/30 { border-color: rgba(6, 182, 212, 0.3); }
-        .border-cyan-500\/40 { border-color: rgba(6, 182, 212, 0.4); }
-        .border-pink-300 { border-color: #f9a8d4; }
-        .border-pink-500\/40 { border-color: rgba(236, 72, 153, 0.4); }
-        .border-pink-500\/60 { border-color: rgba(236, 72, 153, 0.6); }
-        .border-amber-300 { border-color: #fcd34d; }
-        .border-amber-400\/40 { border-color: rgba(251, 191, 36, 0.4); }
-        .border-amber-400\/60 { border-color: rgba(251, 191, 36, 0.6); }
-
-        .bg-slate-700\/60 { background-color: rgba(51, 65, 85, 0.6); }
-        .bg-slate-800 { background-color: #1e293b; }
-        .bg-slate-900 { background-color: #0f172a; }
-        .bg-slate-900\/60 { background-color: rgba(15, 23, 42, 0.6); }
-        .bg-slate-900\/80 { background-color: rgba(15, 23, 42, 0.8); }
-        .bg-slate-900\/90 { background-color: rgba(15, 23, 42, 0.9); }
-        .bg-slate-950 { background-color: #020617; }
-        .bg-slate-950\/60 { background-color: rgba(2, 6, 23, 0.6); }
-        .bg-slate-950\/90 { background-color: rgba(2, 6, 23, 0.92); }
-        .bg-slate-950\/95 { background-color: rgba(2, 6, 23, 0.96); }
-        .bg-cyan-400 { background-color: #22d3ee; }
-        .bg-amber-400 { background-color: #fbbf24; }
-        .bg-amber-500\/80 { background-color: rgba(245, 158, 11, 0.8); }
-        .bg-amber-950\/80 { background-color: rgba(69, 26, 3, 0.8); }
-        .bg-pink-500 { background-color: #ec4899; }
-        .bg-pink-600\/90 { background-color: rgba(219, 39, 119, 0.9); }
-
-        .bg-gradient-to-r.from-cyan-500.to-emerald-400 { background-image: linear-gradient(to right, #06b6d4, #34d399); }
-        .bg-gradient-to-r.from-pink-500.to-purple-500 { background-image: linear-gradient(to right, #ec4899, #a855f7); }
-        .bg-gradient-to-r.from-amber-400.to-pink-500 { background-image: linear-gradient(to right, #fbbf24, #ec4899); }
-        .bg-gradient-to-r.from-cyan-500.via-teal-400.to-emerald-400 { background-image: linear-gradient(to right, #06b6d4, #2dd4bf, #34d399); }
-        .bg-gradient-to-r.from-cyan-400.to-teal-500 { background-image: linear-gradient(to right, #22d3ee, #14b8a6); }
-
-        .text-white { color: #ffffff; }
-        .text-slate-300 { color: #cbd5e1; }
-        .text-slate-400 { color: #94a3b8; }
-        .text-slate-500 { color: #64748b; }
-        .text-slate-950 { color: #020617; }
-        .text-cyan-300 { color: #67e8f9; }
-        .text-cyan-400 { color: #22d3ee; }
-        .text-pink-400 { color: #f472b6; }
-        .text-pink-500 { color: #ec4899; }
-        .text-amber-300 { color: #fcd34d; }
-        .text-amber-400 { color: #fbbf24; }
-        .text-emerald-400 { color: #34d399; }
-        .text-purple-400 { color: #c084fc; }
-
-        .text-\[10px\] { font-size: 10px; line-height: 14px; }
-        .text-\[11px\] { font-size: 11px; line-height: 15px; }
-        .text-xs { font-size: 0.75rem; line-height: 1rem; }
-        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
-        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-
-        .font-bold { font-weight: 700; }
-        .font-extrabold { font-weight: 800; }
-        .font-black { font-weight: 900; }
-        .uppercase { text-transform: uppercase; }
-        .tracking-wider { letter-spacing: 0.05em; }
-        .tracking-widest { letter-spacing: 0.1em; }
-        .text-center { text-align: center; }
-        .text-left { text-align: left; }
-
-        .opacity-0 { opacity: 0; }
-        .opacity-60 { opacity: 0.6; }
-
-        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
-        .shadow-pink-500\/40 { box-shadow: 0 10px 25px -3px rgba(236, 72, 153, 0.4); }
-        .shadow-\[0_0_50px_rgba\(0\,243\,255\,0\.2\)\] { box-shadow: 0 0 50px rgba(0, 243, 255, 0.2); }
-        .shadow-\[0_0_50px_rgba\(251\,191\,36\,0\.3\)\] { box-shadow: 0 0 50px rgba(251, 191, 36, 0.3); }
-        .shadow-\[0_0_25px_rgba\(0\,243\,255\,0\.4\)\] { box-shadow: 0 0 25px rgba(0, 243, 255, 0.4); }
-        .shadow-\[0_0_20px_\#00f3ff\] { box-shadow: 0 0 20px #00f3ff; }
-        .shadow-\[0_0_20px_rgba\(251\,191\,36\,0\.4\)\] { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
-
-        .transition { transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); }
-        .transition-all { transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); }
-        .transition-opacity { transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1); }
-        .duration-75 { transition-duration: 75ms; }
-        .duration-100 { transition-duration: 100ms; }
-        .duration-200 { transition-duration: 200ms; }
-        .duration-300 { transition-duration: 300ms; }
-
-        /* Hover & Active States */
-        .hover\:text-cyan-400:hover { color: #22d3ee; }
-        .hover\:border-cyan-400:hover { border-color: #22d3ee; }
-        .hover\:bg-cyan-950:hover { background-color: #083344; }
-        .hover\:bg-slate-700:hover { background-color: #334155; }
-        .hover\:bg-slate-800:hover { background-color: #1e293b; }
-        .hover\:bg-pink-950\/40:hover { background-color: rgba(80, 7, 36, 0.4); }
-        .hover\:bg-amber-950\/30:hover { background-color: rgba(69, 26, 3, 0.3); }
-        .hover\:bg-amber-300:hover { background-color: #fcd34d; }
-        .hover\:brightness-110:hover { filter: brightness(1.1); }
-        .active\:scale-95:active { transform: scale(0.95); }
-
-        /* Responsive Breakpoints (sm: >= 640px) */
-        @media (min-width: 640px) {
-            .sm\:flex { display: flex; }
-            .sm\:hidden { display: none; }
-            .sm\:w-44 { width: 11rem; }
-            .sm\:w-48 { width: 12rem; }
-            .sm\:w-56 { width: 14rem; }
-            .sm\:p-2 { padding: 0.5rem; }
-            .sm\:rounded-3xl { border-radius: 1.5rem; }
-            .sm\:border-2 { border-width: 2px; border-style: solid; }
-            .sm\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-            .sm\:text-base { font-size: 1rem; line-height: 1.5rem; }
-            .sm\:text-5xl { font-size: 3rem; line-height: 1; }
-        }
     </style>
 </head>
-<body class="h-screen w-screen flex flex-col justify-between items-center relative select-none">
+<body class="h-[100dvh] w-screen flex flex-col justify-between items-center relative select-none overflow-hidden">
 
     <!-- Top Futuristic Canvas HUD Overlay -->
-    <header id="topHud" class="w-full max-w-6xl flex justify-between items-center px-4 py-2 z-10 pointer-events-none mt-2 transition-opacity duration-300">
+    <header id="topHud" class="w-full max-w-6xl flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 px-2 sm:px-4 py-1.5 sm:py-2 z-20 pointer-events-none mt-1 sm:mt-2 transition-opacity duration-300">
         <!-- Health & Temporal Energy Bars -->
-        <div class="flex items-center gap-4 glass-panel px-4 py-2 rounded-2xl pointer-events-auto">
-            <div class="flex flex-col gap-1 w-36 sm:w-48">
-                <div class="flex justify-between text-[11px] font-orbitron font-bold text-cyan-300">
-                    <span>HULL VITALITY</span>
+        <div class="flex items-center gap-2.5 sm:gap-4 glass-panel px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl pointer-events-auto">
+            <div class="flex flex-col gap-1 w-28 sm:w-44">
+                <div class="flex justify-between text-[10px] sm:text-[11px] font-orbitron font-bold text-cyan-300">
+                    <span>HULL</span>
                     <span id="hpText">100/100</span>
                 </div>
-                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-cyan-500/40">
+                <div class="w-full h-2 sm:h-2.5 bg-slate-950 rounded-full overflow-hidden border border-cyan-500/40">
                     <div id="hpBar" class="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 w-full transition-all duration-200"></div>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-1 w-32 sm:w-44">
-                <div class="flex justify-between text-[11px] font-orbitron font-bold text-pink-400">
-                    <span>TEMPORAL ENERGY</span>
+            <div class="flex flex-col gap-1 w-24 sm:w-40">
+                <div class="flex justify-between text-[10px] sm:text-[11px] font-orbitron font-bold text-pink-400">
+                    <span>ENERGY</span>
                     <span id="echoEnergyText">100%</span>
                 </div>
-                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-pink-500/40">
+                <div class="w-full h-2 sm:h-2.5 bg-slate-950 rounded-full overflow-hidden border border-pink-500/40">
                     <div id="echoEnergyBar" class="h-full bg-gradient-to-r from-pink-500 to-purple-500 w-full transition-all duration-200"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Center Realm & Boss Info -->
-        <div id="realmBadge" class="hidden sm:flex flex-col items-center glass-panel px-6 py-1.5 rounded-2xl border-cyan-400/50">
-            <span id="realmTitle" class="text-xs font-orbitron font-extrabold tracking-widest text-cyan-300">REALM I: CHRONO VOID</span>
+        <!-- Center Realm, Difficulty & Boss Info -->
+        <div id="realmBadge" class="hidden md:flex flex-col items-center glass-panel px-5 py-1.5 rounded-2xl border-cyan-400/50">
+            <div class="flex items-center gap-2">
+                <span id="realmTitle" class="text-xs font-orbitron font-extrabold tracking-widest text-cyan-300">REALM I: CHRONO VOID</span>
+                <span id="difficultyHudBadge" class="text-[10px] font-orbitron font-bold px-2 py-0.5 rounded bg-cyan-950/90 border border-cyan-400/50 text-cyan-300">NORMAL</span>
+            </div>
             <span id="waveText" class="text-[10px] font-bold text-pink-400 font-mono tracking-wider">SECTOR WAVE 1/5</span>
         </div>
 
         <!-- Dust Coins & Controls -->
-        <div class="flex items-center gap-3 glass-panel px-4 py-2 rounded-2xl pointer-events-auto">
-            <div class="flex items-center gap-1.5 font-orbitron">
-                <span class="text-amber-400 text-sm">✨</span>
-                <span id="dustText" class="text-amber-300 font-bold text-sm sm:text-base">0</span>
+        <div class="flex items-center gap-1.5 sm:gap-2.5 glass-panel px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-2xl pointer-events-auto ml-auto sm:ml-0">
+            <div class="flex items-center gap-1 font-orbitron">
+                <span class="text-amber-400 text-xs sm:text-sm">✨</span>
+                <span id="dustText" class="text-amber-300 font-bold text-xs sm:text-base">0</span>
             </div>
-            <div class="h-6 w-px bg-slate-700/60"></div>
-            <button id="soundToggleBtn" class="px-2.5 py-1 bg-slate-900/80 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition">
-                🔊 Audio
+            <div class="h-5 w-px bg-slate-700/60"></div>
+            <button id="touchToggleBtn" class="px-2 py-1 bg-slate-900/80 border border-slate-700 rounded-lg text-[11px] font-bold text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition" title="Toggle Touch Controls">
+                📱 Touch
             </button>
-            <button id="pauseBtn" class="px-2.5 py-1 bg-slate-900/80 border border-cyan-500/40 rounded-lg text-xs font-bold text-cyan-400 hover:bg-cyan-950 transition">
+            <button id="soundToggleBtn" class="px-2 py-1 bg-slate-900/80 border border-slate-700 rounded-lg text-[11px] font-bold text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition">
+                🔊
+            </button>
+            <button id="pauseBtn" class="px-2 py-1 bg-slate-900/80 border border-cyan-500/40 rounded-lg text-[11px] font-bold text-cyan-400 hover:bg-cyan-950 transition">
                 PAUSE
             </button>
         </div>
     </header>
 
+    <!-- Mobile Compact Wave & Difficulty Strip -->
+    <div id="mobileWaveStrip" class="flex md:hidden items-center justify-center gap-2 px-3 py-1 z-20 pointer-events-none">
+        <span id="mobileDifficultyBadge" class="text-[9px] font-orbitron font-bold px-2 py-0.5 rounded bg-cyan-950/90 border border-cyan-400/50 text-cyan-300">NORMAL</span>
+        <span id="mobileWaveText" class="text-[10px] font-bold text-pink-400 font-mono tracking-wider">SECTOR WAVE 1/5</span>
+    </div>
+
     <!-- Main Game Viewport -->
-    <main class="relative w-full h-full flex-1 flex items-center justify-center p-0 sm:p-2">
-        <div class="relative w-full h-full max-w-[1280px] max-h-[720px] aspect-[16/9] bg-slate-950 rounded-none sm:rounded-3xl border-0 sm:border-2 border-cyan-500/40 shadow-[0_0_50px_rgba(0,243,255,0.2)] overflow-hidden flex items-center justify-center">
+    <main class="relative w-full h-full flex-1 flex items-center justify-center p-1 sm:p-2 overflow-hidden">
+        <div id="viewportFrame" class="relative w-full h-full max-w-[1280px] max-h-[720px] bg-slate-950 rounded-2xl sm:rounded-3xl border border-cyan-500/40 sm:border-2 shadow-[0_0_50px_rgba(0,243,255,0.2)] overflow-hidden flex items-center justify-center">
             
             <!-- Canvas Object -->
-            <canvas id="gameCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+            <canvas id="gameCanvas" class="w-full h-full block cursor-crosshair touch-none"></canvas>
 
             <!-- Ad Overlay Modal -->
-            <div id="adOverlay" class="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center z-40 hidden transition-all">
-                <div class="glass-panel p-6 rounded-3xl border-amber-400/60 max-w-md w-full flex flex-col items-center shadow-[0_0_50px_rgba(251,191,36,0.3)]">
+            <div id="adOverlay" class="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center p-4 sm:p-6 text-center z-40 hidden transition-all">
+                <div class="glass-panel p-5 sm:p-6 rounded-3xl border-amber-400/60 max-w-md w-full flex flex-col items-center shadow-[0_0_50px_rgba(251,191,36,0.3)]">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="text-xs font-orbitron font-bold text-amber-400 uppercase tracking-widest bg-amber-950/80 px-3 py-1 rounded-full border border-amber-400/40">QUANTUM RECOVER</span>
                     </div>
-                    <h3 id="adTitle" class="text-xl font-bold font-orbitron text-white mb-2">CHRONO ENERGETICS</h3>
+                    <h3 id="adTitle" class="text-lg sm:text-xl font-bold font-orbitron text-white mb-2">CHRONO ENERGETICS</h3>
                     <p id="adDescription" class="text-xs text-slate-300 font-mono mb-6">Recharging temporal core matrices...</p>
                     
                     <div class="w-full h-3 bg-slate-950 rounded-full border border-slate-700 overflow-hidden mb-4">
@@ -356,48 +128,71 @@
             </div>
 
             <!-- Temporal Timeline Scrubber HUD Overlay -->
-            <div id="timelineHud" class="absolute bottom-4 left-1/2 -translate-x-1/2 glass-panel px-6 py-2 rounded-full border-cyan-400/40 flex items-center gap-3 text-xs font-orbitron text-cyan-300 pointer-events-none opacity-0 transition-opacity">
+            <div id="timelineHud" class="hidden sm:flex absolute bottom-3 left-1/2 -translate-x-1/2 glass-panel px-5 py-1.5 rounded-full border-cyan-400/40 items-center gap-3 text-xs font-orbitron text-cyan-300 pointer-events-none opacity-0 transition-opacity">
                 <span>[SPACE] TEMPORAL ECHO</span>
-                <div class="w-36 sm:w-56 h-2 bg-slate-950 rounded-full overflow-hidden border border-cyan-500/40">
+                <div class="w-32 sm:w-48 h-2 bg-slate-950 rounded-full overflow-hidden border border-cyan-500/40">
                     <div id="timelineScrubber" class="h-full bg-cyan-400 w-0 transition-all duration-75"></div>
                 </div>
-                <span class="text-[10px] text-pink-400">5.0s HISTORY</span>
+                <span id="historyWindowLabel" class="text-[10px] text-pink-400">5.0s HISTORY</span>
             </div>
 
             <!-- UI Overlay Screens (Main Menu / Upgrades / Game Over) -->
-            <div id="overlayScreen" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-30 transition-all duration-300">
+            <div id="overlayScreen" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center z-30 transition-all duration-300 overflow-y-auto">
                 
                 <!-- MAIN MENU -->
-                <div id="mainMenuView" class="flex flex-col items-center max-w-lg w-full">
-                    <h1 class="text-3xl sm:text-5xl font-black font-orbitron text-cyan-400 neon-glow-cyan mb-1">AETHER ECHOES</h1>
-                    <p class="text-xs sm:text-sm font-bold font-orbitron text-pink-500 neon-glow-pink tracking-widest mb-6">QUANTUM NEXUS - REMASTERED</p>
+                <div id="mainMenuView" class="flex flex-col items-center max-w-lg w-full my-auto py-2">
+                    <h1 class="text-2xl sm:text-5xl font-black font-orbitron text-cyan-400 neon-glow-cyan mb-1">AETHER ECHOES</h1>
+                    <p class="text-[11px] sm:text-sm font-bold font-orbitron text-pink-500 neon-glow-pink tracking-widest mb-4 sm:mb-5">QUANTUM NEXUS • CROSS-PLAY</p>
 
-                    <div class="flex flex-col gap-3 w-full mb-6">
-                        <button id="startCampaignBtn" class="py-4 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 font-black font-orbitron text-xs sm:text-sm rounded-2xl shadow-[0_0_25px_rgba(0,243,255,0.4)] hover:brightness-110 active:scale-95 transition-all">
+                    <!-- Difficulty Selector -->
+                    <div class="w-full mb-4 sm:mb-5">
+                        <div class="text-[10px] font-orbitron font-bold text-slate-400 tracking-widest mb-2">SELECT COMBAT DIFFICULTY</div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full" id="difficultySelector">
+                            <button type="button" data-diff="EASY" class="diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-bold border border-slate-700 bg-slate-900/80 text-slate-400 hover:border-emerald-400/60 hover:text-emerald-300 transition-all">
+                                EASY
+                            </button>
+                            <button type="button" data-diff="NORMAL" class="diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-extrabold border border-cyan-400 bg-cyan-950/60 text-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.25)] transition-all">
+                                NORMAL
+                            </button>
+                            <button type="button" data-diff="HARD" class="diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-bold border border-slate-700 bg-slate-900/80 text-slate-400 hover:border-pink-500/60 hover:text-pink-400 transition-all">
+                                HARD (2X ✨)
+                            </button>
+                            <button type="button" data-diff="INSANE" class="diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-bold border border-slate-700 bg-slate-900/80 text-slate-400 hover:border-red-500/70 hover:text-amber-300 transition-all">
+                                INSANE (4X ✨)
+                            </button>
+                            <button type="button" data-diff="ULTRA_INSANE" class="diff-btn col-span-2 py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-bold border border-slate-700 bg-slate-900/80 text-slate-400 hover:border-fuchsia-500/80 hover:text-fuchsia-300 transition-all">
+                                ☠️ ULTRA INSANE (8X ✨)
+                            </button>
+                        </div>
+                        <p id="difficultyDesc" class="text-[10px] sm:text-[11px] font-mono text-cyan-300/90 mt-2">100 HP • 0.18/f Energy • 1.0x Enemy HP/Spd/Dmg • 1.0x Swarm • 1x Dust</p>
+                    </div>
+
+                    <div class="flex flex-col gap-2.5 sm:gap-3 w-full mb-4 sm:mb-5">
+                        <button id="startCampaignBtn" class="py-3.5 sm:py-4 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 font-black font-orbitron text-xs sm:text-sm rounded-2xl shadow-[0_0_25px_rgba(0,243,255,0.4)] hover:brightness-110 active:scale-95 transition-all">
                             ENTER CAMPAIGN MATRIX
                         </button>
 
-                        <button id="startSurvivalBtn" class="py-3.5 bg-slate-900 border border-pink-500/60 text-pink-400 font-extrabold font-orbitron text-xs rounded-2xl hover:bg-pink-950/40 active:scale-95 transition-all">
+                        <button id="startSurvivalBtn" class="py-3 sm:py-3.5 bg-slate-900 border border-pink-500/60 text-pink-400 font-extrabold font-orbitron text-xs rounded-2xl hover:bg-pink-950/40 active:scale-95 transition-all">
                             ENDLESS SURVIVAL WAVE MODE
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3 w-full">
-                        <button id="openUpgradesBtn" class="py-3 bg-slate-900/90 border border-amber-400/60 text-amber-300 font-bold font-orbitron text-xs rounded-xl hover:bg-amber-950/30 transition">
-                            ✨ SKILL TREE & UPGRADES
+                    <div class="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
+                        <button id="openUpgradesBtn" class="py-2.5 sm:py-3 bg-slate-900/90 border border-amber-400/60 text-amber-300 font-bold font-orbitron text-[11px] sm:text-xs rounded-xl hover:bg-amber-950/30 transition">
+                            ✨ SKILL MATRIX
                         </button>
-                        <button id="openControlsBtn" class="py-3 bg-slate-900/90 border border-slate-700 text-slate-300 font-bold font-orbitron text-xs rounded-xl hover:bg-slate-800 transition">
-                            🎮 CONTROLS & HOW TO PLAY
+                        <button id="openControlsBtn" class="py-2.5 sm:py-3 bg-slate-900/90 border border-slate-700 text-slate-300 font-bold font-orbitron text-[11px] sm:text-xs rounded-xl hover:bg-slate-800 transition">
+                            🎮 PC & MOBILE GUIDE
                         </button>
                     </div>
                 </div>
 
                 <!-- SKILL TREE & UPGRADES VIEW -->
-                <div id="upgradesView" class="hidden flex-col items-center max-w-xl w-full">
-                    <h2 class="text-2xl font-black font-orbitron text-amber-400 neon-glow-gold mb-1">QUANTUM SKILL MATRIX</h2>
-                    <p class="text-xs font-mono text-slate-300 mb-4">Spend Nexus Dust earned from defeating cosmic entities.</p>
+                <div id="upgradesView" class="hidden flex-col items-center max-w-xl w-full my-auto py-2">
+                    <h2 class="text-xl sm:text-2xl font-black font-orbitron text-amber-400 neon-glow-gold mb-1">QUANTUM SKILL MATRIX</h2>
+                    <p class="text-xs font-mono text-slate-300 mb-3">Spend Nexus Dust earned from defeating cosmic entities.</p>
 
-                    <div id="upgradesContainer" class="flex flex-col gap-2.5 w-full max-h-[300px] overflow-y-auto mb-5 p-2 bg-slate-950/60 rounded-2xl border border-slate-800">
+                    <div id="upgradesContainer" class="flex flex-col gap-2 w-full max-h-[260px] sm:max-h-[300px] overflow-y-auto mb-4 p-2 bg-slate-950/60 rounded-2xl border border-slate-800">
                         <!-- Upgrades injected via JS -->
                     </div>
 
@@ -407,33 +202,44 @@
                 </div>
 
                 <!-- CONTROLS VIEW -->
-                <div id="controlsView" class="hidden flex-col items-center max-w-lg w-full text-left">
-                    <h2 class="text-2xl font-black font-orbitron text-cyan-400 mb-4 text-center">PILOT CONTROLS</h2>
+                <div id="controlsView" class="hidden flex-col items-center max-w-lg w-full text-left my-auto py-2">
+                    <h2 class="text-xl sm:text-2xl font-black font-orbitron text-cyan-400 mb-3 text-center">PC & MOBILE CONTROLS</h2>
 
-                    <div class="glass-panel p-4 rounded-2xl w-full flex flex-col gap-3 font-mono text-xs mb-5">
-                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                    <div class="glass-panel p-3.5 sm:p-4 rounded-2xl w-full flex flex-col gap-2.5 font-mono text-[11px] sm:text-xs mb-4 max-h-[320px] overflow-y-auto">
+                        <div class="text-cyan-300 font-orbitron font-bold text-[10px] tracking-wider uppercase">Desktop (Keyboard + Mouse)</div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1.5">
                             <span class="text-cyan-400 font-bold">[WASD] / [Arrows]</span>
                             <span class="text-slate-300">Omni-directional Thrusters</span>
                         </div>
-                        <div class="flex justify-between border-b border-slate-800 pb-2">
-                            <span class="text-cyan-400 font-bold">[Left Mouse Click]</span>
-                            <span class="text-slate-300">Fire Plasma Blasters</span>
+                        <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                            <span class="text-cyan-400 font-bold">[Mouse + Left Click]</span>
+                            <span class="text-slate-300">Aim & Fire Plasma Blasters</span>
                         </div>
-                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                        <div class="flex justify-between border-b border-slate-800 pb-1.5">
                             <span class="text-pink-400 font-bold">[SPACEBAR]</span>
-                            <span class="text-slate-300">Summon Temporal Echo Shadow (Replays actions)</span>
+                            <span class="text-slate-300">Summon Temporal Echo Shadow</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                            <span class="text-amber-400 font-bold">[SHIFT] / [E] / [Q]</span>
+                            <span class="text-slate-300">Dash / Stasis Freeze / Aegis Shield</span>
                         </div>
                         <div class="flex justify-between border-b border-slate-800 pb-2">
-                            <span class="text-amber-400 font-bold">[SHIFT]</span>
-                            <span class="text-slate-300">Quantum Dash Teleport</span>
+                            <span class="text-slate-400 font-bold">[P] or [ESC]</span>
+                            <span class="text-slate-300">Pause Simulation</span>
                         </div>
-                        <div class="flex justify-between border-b border-slate-800 pb-2">
-                            <span class="text-emerald-400 font-bold">[E]</span>
-                            <span class="text-slate-300">Trigger Stasis Time Freeze</span>
+
+                        <div class="text-pink-400 font-orbitron font-bold text-[10px] tracking-wider uppercase pt-1">Phone & Tablet (Touchscreen)</div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                            <span class="text-cyan-400 font-bold">Left Analog Stick</span>
+                            <span class="text-slate-300">360° Ship Steering</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                            <span class="text-emerald-400 font-bold">Right Aim Stick / Auto-Fire</span>
+                            <span class="text-slate-300">Aim + Fire (or Auto-Target toggle)</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-purple-400 font-bold">[Q]</span>
-                            <span class="text-slate-300">Activate Aegis Invulnerability Shield</span>
+                            <span class="text-pink-400 font-bold">Touch Action Pads</span>
+                            <span class="text-slate-300">ECHO, DASH, STASIS & SHIELD buttons</span>
                         </div>
                     </div>
 
@@ -443,11 +249,15 @@
                 </div>
 
                 <!-- GAME OVER VIEW -->
-                <div id="gameOverView" class="hidden flex-col items-center max-w-md w-full">
-                    <h2 id="gameOverTitle" class="text-3xl font-black font-orbitron text-pink-500 neon-glow-pink mb-1">QUANTUM COLLAPSE</h2>
-                    <p class="text-xs font-mono text-slate-400 mb-4">HULL INTEGRITY spinout</p>
+                <div id="gameOverView" class="hidden flex-col items-center max-w-md w-full my-auto py-2">
+                    <h2 id="gameOverTitle" class="text-2xl sm:text-3xl font-black font-orbitron text-pink-500 neon-glow-pink mb-1">QUANTUM COLLAPSE</h2>
+                    <p class="text-xs font-mono text-slate-400 mb-3">HULL INTEGRITY CRITICAL</p>
 
-                    <div class="w-full glass-panel p-4 rounded-2xl mb-5 flex flex-col gap-2 font-mono text-xs text-left">
+                    <div class="w-full glass-panel p-3.5 sm:p-4 rounded-2xl mb-4 flex flex-col gap-2 font-mono text-xs text-left">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Combat Difficulty:</span>
+                            <span id="finalDifficultyText" class="text-cyan-300 font-bold">NORMAL</span>
+                        </div>
                         <div class="flex justify-between">
                             <span class="text-slate-400">Entities Destroyed:</span>
                             <span id="finalKillsText" class="text-cyan-400 font-bold">0</span>
@@ -462,11 +272,15 @@
                         </div>
                     </div>
 
-                    <button id="retryBtn" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-teal-500 text-slate-950 font-black font-orbitron text-xs rounded-xl shadow-[0_0_20px_#00f3ff] active:scale-95 transition-all">
+                    <button id="retryBtn" class="w-full py-3 bg-gradient-to-r from-cyan-400 to-teal-500 text-slate-950 font-black font-orbitron text-xs rounded-xl shadow-[0_0_20px_#00f3ff] active:scale-95 transition-all">
                         RE-ENTER QUANTUM MATRIX
                     </button>
 
-                    <button id="rewardedAdBtn" class="w-full mt-3 py-3 bg-gradient-to-r from-amber-400 to-pink-500 text-slate-950 font-extrabold font-orbitron text-xs rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <button id="mainMenuFromGameOverBtn" class="w-full mt-2 py-2.5 bg-slate-900 border border-slate-700 text-slate-300 hover:text-white font-bold font-orbitron text-xs rounded-xl transition-all">
+                        CHANGE DIFFICULTY / MAIN MENU
+                    </button>
+
+                    <button id="rewardedAdBtn" class="w-full mt-2 py-2.5 bg-gradient-to-r from-amber-400 to-pink-500 text-slate-950 font-extrabold font-orbitron text-xs rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2">
                         <span>✨ REGENERATE HULL (+50 DUST & REVIVE)</span>
                     </button>
                 </div>
@@ -475,15 +289,43 @@
         </div>
     </main>
 
-    <!-- Mobile Controls -->
-    <footer id="mobileControls" class="w-full max-w-4xl flex justify-between items-center px-4 py-2 sm:hidden pointer-events-none z-20 mb-2">
-        <div id="joystickMove" class="w-24 h-24 bg-slate-900/60 border border-cyan-500/30 rounded-full pointer-events-auto flex items-center justify-center relative touch-none">
-            <div id="joystickStick" class="w-8 h-8 bg-cyan-400 rounded-full opacity-60"></div>
+    <!-- Cross-Platform Touch Controls Deck -->
+    <footer id="mobileControls" class="w-full max-w-6xl flex justify-between items-end px-3 sm:px-6 pb-2 sm:pb-3 pt-1 md:hidden pointer-events-none z-20 select-none">
+        <!-- Left Analog Movement Joystick -->
+        <div id="joystickMove" class="w-24 h-24 sm:w-28 sm:h-28 bg-slate-900/75 border-2 border-cyan-500/40 rounded-full pointer-events-auto flex items-center justify-center relative touch-none shadow-[0_0_20px_rgba(0,243,255,0.15)]">
+            <div class="w-10 h-10 rounded-full border border-cyan-400/20 pointer-events-none"></div>
+            <div id="joystickStick" class="w-10 h-10 bg-gradient-to-br from-cyan-300 to-teal-500 rounded-full opacity-85 shadow-[0_0_12px_#00f3ff] pointer-events-none absolute"></div>
         </div>
 
-        <div class="flex gap-2 pointer-events-auto">
-            <button id="touchAbilityBtn" class="w-14 h-14 bg-amber-500/80 border border-amber-300 rounded-2xl text-slate-950 font-orbitron font-extrabold text-xs">STASIS</button>
-            <button id="touchEchoBtn" class="w-16 h-16 bg-pink-600/90 border border-pink-300 rounded-full text-white font-orbitron font-extrabold text-xs shadow-lg shadow-pink-500/40">ECHO</button>
+        <!-- Center Quick-Ability & Auto-Fire Cluster -->
+        <div class="flex flex-col items-center gap-2 pointer-events-auto mb-1">
+            <div class="flex items-center gap-2">
+                <button id="touchAutoFireBtn" type="button" class="px-3 py-2 bg-cyan-950/90 border border-cyan-400 rounded-xl text-cyan-300 font-orbitron font-extrabold text-[10px] shadow-[0_0_12px_rgba(0,243,255,0.3)] active:scale-95 transition">
+                    AUTO-FIRE: ON
+                </button>
+                <button id="touchDashBtn" type="button" class="px-3 py-2 bg-slate-900/90 border border-sky-400/70 rounded-xl text-sky-300 font-orbitron font-extrabold text-[10px] active:scale-95 transition">
+                    DASH
+                </button>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="touchAbilityBtn" type="button" class="px-3 py-2 bg-amber-500/90 border border-amber-200 rounded-xl text-slate-950 font-orbitron font-extrabold text-[10px] active:scale-95 transition">
+                    STASIS
+                </button>
+                <button id="touchShieldBtn" type="button" class="px-3 py-2 bg-emerald-500/90 border border-emerald-200 rounded-xl text-slate-950 font-orbitron font-extrabold text-[10px] active:scale-95 transition">
+                    SHIELD
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Analog Aim/Fire Joystick + Echo Button -->
+        <div class="flex items-end gap-2.5 pointer-events-auto">
+            <button id="touchEchoBtn" type="button" class="w-14 h-14 sm:w-16 sm:h-16 bg-pink-600/90 border-2 border-pink-300 rounded-full text-white font-orbitron font-black text-[11px] shadow-[0_0_20px_rgba(255,0,127,0.5)] active:scale-90 transition flex items-center justify-center mb-1">
+                ECHO
+            </button>
+            <div id="joystickAim" class="w-24 h-24 sm:w-28 sm:h-28 bg-slate-900/75 border-2 border-pink-500/40 rounded-full flex items-center justify-center relative touch-none shadow-[0_0_20px_rgba(255,0,127,0.15)]">
+                <div class="w-10 h-10 rounded-full border border-pink-400/20 pointer-events-none"></div>
+                <div id="joystickAimStick" class="w-10 h-10 bg-gradient-to-br from-pink-400 to-rose-600 rounded-full opacity-85 shadow-[0_0_12px_#ff007f] pointer-events-none absolute"></div>
+            </div>
         </div>
     </footer>
 
@@ -510,21 +352,19 @@
                 try {
                     this.bgMusicOsc = this.ctx.createOscillator();
                     this.bgGain = this.ctx.createGain();
-                    
                     this.bgMusicOsc.type = 'sawtooth';
-                    this.bgMusicOsc.frequency.setValueAtTime(55, this.ctx.currentTime); // Low A
+                    this.bgMusicOsc.frequency.setValueAtTime(55, this.ctx.currentTime);
 
                     const filter = this.ctx.createBiquadFilter();
                     filter.type = 'lowpass';
                     filter.frequency.setValueAtTime(220, this.ctx.currentTime);
 
                     this.bgGain.gain.setValueAtTime(0.03, this.ctx.currentTime);
-
                     this.bgMusicOsc.connect(filter);
                     filter.connect(this.bgGain);
                     this.bgGain.connect(this.ctx.destination);
                     this.bgMusicOsc.start();
-                } catch(e) {}
+                } catch (e) {}
             }
 
             playLaser() {
@@ -599,11 +439,11 @@
             }
 
             showInterstitial(onComplete) {
-                this.startAd("QUANTUM NEXUS - PREVIEW", "Experience high-octane synthwave action across multi-realms!", 3, false, onComplete);
+                this.startAd("QUANTUM NEXUS - PREVIEW", "Experience high-octane synthwave action across multi-realms!", 2, false, onComplete);
             }
 
             showRewarded(onRewardGiven) {
-                this.startAd("NEXUS CORE REGENERATOR", "Recharging hull matrices +50 Nexus Dust!", 4, true, onRewardGiven);
+                this.startAd("NEXUS CORE REGENERATOR", "Recharging hull matrices +50 Nexus Dust!", 3, true, onRewardGiven);
             }
 
             startAd(title, desc, durationSec, isRewarded, callback) {
@@ -671,30 +511,120 @@
         canvas.width = CANVAS_WIDTH;
         canvas.height = CANVAS_HEIGHT;
 
+        // --- Difficulty Configurations ---
+        const DIFFICULTY_CONFIGS = {
+            EASY: {
+                label: 'EASY',
+                hudBadge: 'EASY',
+                badgeClass: 'bg-emerald-950/90 border-emerald-400/60 text-emerald-300',
+                desc: '150 HP • 0.30/f Energy • 0.7x Enemy HP • 0.8x Spd • 0.6x Dmg • 1x Dust',
+                playerHp: 150,
+                playerSpeed: 5.0,
+                energyRegen: 0.30,
+                enemyHpMult: 0.7,
+                enemySpeedMult: 0.8,
+                enemyDamageMult: 0.6,
+                spawnCountMult: 0.75,
+                dustMultiplier: 1,
+                bossCooldown: 100
+            },
+            NORMAL: {
+                label: 'NORMAL',
+                hudBadge: 'NORMAL',
+                badgeClass: 'bg-cyan-950/90 border-cyan-400/50 text-cyan-300',
+                desc: '100 HP • 0.18/f Energy • 1.0x Enemy HP/Spd/Dmg • 1.0x Swarm • 1x Dust',
+                playerHp: 100,
+                playerSpeed: 4.8,
+                energyRegen: 0.18,
+                enemyHpMult: 1.0,
+                enemySpeedMult: 1.0,
+                enemyDamageMult: 1.0,
+                spawnCountMult: 1.0,
+                dustMultiplier: 1,
+                bossCooldown: 80
+            },
+            HARD: {
+                label: 'HARD (2X ✨)',
+                hudBadge: 'HARD 2X',
+                badgeClass: 'bg-pink-950/90 border-pink-500/70 text-pink-300',
+                desc: '75 HP • 0.12/f Energy • 1.5x Enemy HP/Dmg • 1.25x Spd • 2x Dust',
+                playerHp: 75,
+                playerSpeed: 4.8,
+                energyRegen: 0.12,
+                enemyHpMult: 1.5,
+                enemySpeedMult: 1.25,
+                enemyDamageMult: 1.5,
+                spawnCountMult: 1.3,
+                dustMultiplier: 2,
+                bossCooldown: 50
+            },
+            INSANE: {
+                label: 'INSANE (4X ✨)',
+                hudBadge: 'INSANE 4X',
+                badgeClass: 'bg-red-950/90 border-red-500 text-amber-300 animate-pulse',
+                desc: '50 HP • 0.08/f Energy • 2.2x HP/Dmg • 1.55x Spd • Armed Stalkers • 4x Dust',
+                playerHp: 50,
+                playerSpeed: 5.0,
+                energyRegen: 0.08,
+                enemyHpMult: 2.2,
+                enemySpeedMult: 1.55,
+                enemyDamageMult: 2.2,
+                spawnCountMult: 1.65,
+                dustMultiplier: 4,
+                bossCooldown: 32
+            },
+            ULTRA_INSANE: {
+                label: 'ULTRA INSANE (8X ✨)',
+                hudBadge: 'ULTRA INSANE 8X',
+                badgeClass: 'bg-fuchsia-950/90 border-fuchsia-400 text-fuchsia-200 animate-pulse',
+                desc: '25 HP • 5.5 Spd • 0.05/f Energy • 3.2x HP • 1.85x Spd • Bullet-Hell • 8x Dust',
+                playerHp: 25,
+                playerSpeed: 5.5,
+                energyRegen: 0.05,
+                enemyHpMult: 3.2,
+                enemySpeedMult: 1.85,
+                enemyDamageMult: 3.5,
+                spawnCountMult: 2.1,
+                dustMultiplier: 8,
+                bossCooldown: 20
+            }
+        };
+
+        let currentDifficulty = 'NORMAL';
+
         // --- Upgrades Matrix System ---
         const UPGRADES = [
             { id: 'dualBlasters', title: 'Dual Phase Blasters', cost: 15, level: 0, max: 1, desc: 'Fires twin plasma bolts simultaneously.' },
             { id: 'echoDuration', title: 'Extended Echo Shadow', cost: 20, level: 0, max: 3, desc: 'Increases Echo recording window by +2 seconds.' },
-            { id: 'shieldGen', title: 'Aegis Shield Matrix', cost: 30, level: 0, max: 1, desc: 'Unlocks press [Q] for temporary invulnerability shield.' },
-            { id: 'stasisBlast', title: 'Stasis Time Pulse', cost: 25, level: 0, max: 1, desc: 'Unlocks press [E] to freeze all nearby enemies in time.' },
-            { id: 'dashPulse', title: 'Quantum Teleport Dash', cost: 35, level: 0, max: 1, desc: 'Unlocks press [SHIFT] to dash through enemies.' }
+            { id: 'shieldGen', title: 'Aegis Shield Matrix', cost: 30, level: 0, max: 1, desc: 'Unlocks [Q] / SHIELD for temporary invulnerability.' },
+            { id: 'stasisBlast', title: 'Stasis Time Pulse', cost: 25, level: 0, max: 1, desc: 'Unlocks [E] / STASIS to freeze all nearby enemies.' },
+            { id: 'dashPulse', title: 'Quantum Teleport Dash', cost: 35, level: 0, max: 1, desc: 'Unlocks [SHIFT] / DASH to phase through enemies.' }
         ];
 
         let nexusDust = parseInt(localStorage.getItem('aether_dust')) || 0;
         document.getElementById('dustText').textContent = nexusDust;
 
         // --- Game State Variables ---
-        let gameMode = 'CAMPAIGN'; // 'CAMPAIGN' or 'SURVIVAL'
+        let gameMode = 'CAMPAIGN';
         let currentRealm = 1;
         let currentWave = 1;
         let isRunning = false;
         let isPaused = false;
         let killCount = 0;
         let echoCount = 0;
+        let runDustEarned = 0;
+        let bossSpiralOffset = 0;
 
         let mouseX = CANVAS_WIDTH / 2;
         let mouseY = CANVAS_HEIGHT / 2;
         let keys = {};
+
+        // Touch Joystick Vectors & Mobile Assist State
+        let touchMoveVec = { x: 0, y: 0 };
+        let touchAimVec = { x: 0, y: 0, active: false };
+        let isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        let mobileAutoFire = true;
+        let forceTouchControls = false;
 
         // History buffer for Echo Rewind
         let playerHistory = [];
@@ -708,70 +638,106 @@
         let particles = [];
         let dustPickups = [];
 
+        // Helper: Find nearest enemy for mobile smart auto-aim
+        function getNearestEnemy(fromX, fromY) {
+            let nearest = null;
+            let bestDist = Infinity;
+            for (let i = 0; i < enemies.length; i++) {
+                const e = enemies[i];
+                const d = Math.hypot(e.x - fromX, e.y - fromY);
+                if (d < bestDist) {
+                    bestDist = d;
+                    nearest = e;
+                }
+            }
+            return nearest;
+        }
+
         // --- Player Class ---
         class Player {
             constructor() {
+                const diff = DIFFICULTY_CONFIGS[currentDifficulty];
                 this.x = CANVAS_WIDTH / 2;
                 this.y = CANVAS_HEIGHT / 2;
                 this.radius = 18;
-                this.speed = 4.8;
-                this.hp = 100;
-                this.maxHp = 100;
+                this.speed = diff.playerSpeed;
+                this.hp = diff.playerHp;
+                this.maxHp = diff.playerHp;
                 this.echoEnergy = 100;
                 this.maxEchoEnergy = 100;
                 this.shootCooldown = 0;
                 this.shieldTimer = 0;
                 this.stasisCooldown = 0;
                 this.dashTimer = 0;
+                this.facingAngle = 0;
             }
 
             update() {
-                // Movement
-                let dx = 0, dy = 0;
+                const diff = DIFFICULTY_CONFIGS[currentDifficulty];
+                let dx = touchMoveVec.x;
+                let dy = touchMoveVec.y;
                 if (keys['KeyW'] || keys['ArrowUp']) dy -= 1;
                 if (keys['KeyS'] || keys['ArrowDown']) dy += 1;
                 if (keys['KeyA'] || keys['ArrowLeft']) dx -= 1;
                 if (keys['KeyD'] || keys['ArrowRight']) dx += 1;
 
-                if (dx !== 0 && dy !== 0) {
-                    dx *= 0.7071;
-                    dy *= 0.7071;
+                const mag = Math.hypot(dx, dy);
+                if (mag > 1) {
+                    dx /= mag;
+                    dy /= mag;
                 }
 
                 const speedMult = this.dashTimer > 0 ? 3.0 : 1.0;
                 this.x = Math.max(this.radius, Math.min(CANVAS_WIDTH - this.radius, this.x + dx * this.speed * speedMult));
                 this.y = Math.max(this.radius, Math.min(CANVAS_HEIGHT - this.radius, this.y + dy * this.speed * speedMult));
 
-                // Cooldowns
+                const touchModeActive = isTouchDevice || forceTouchControls;
+                if (touchAimVec.active && (Math.abs(touchAimVec.x) > 0.1 || Math.abs(touchAimVec.y) > 0.1)) {
+                    this.facingAngle = Math.atan2(touchAimVec.y, touchAimVec.x);
+                    mouseX = this.x + Math.cos(this.facingAngle) * 180;
+                    mouseY = this.y + Math.sin(this.facingAngle) * 180;
+                } else if (touchModeActive && mobileAutoFire) {
+                    const nearest = getNearestEnemy(this.x, this.y);
+                    if (nearest) {
+                        this.facingAngle = Math.atan2(nearest.y - this.y, nearest.x - this.x);
+                        mouseX = nearest.x;
+                        mouseY = nearest.y;
+                    } else if (mag > 0.15) {
+                        this.facingAngle = Math.atan2(dy, dx);
+                    }
+                } else {
+                    this.facingAngle = Math.atan2(mouseY - this.y, mouseX - this.x);
+                }
+
                 if (this.shootCooldown > 0) this.shootCooldown--;
                 if (this.shieldTimer > 0) this.shieldTimer--;
                 if (this.stasisCooldown > 0) this.stasisCooldown--;
                 if (this.dashTimer > 0) this.dashTimer--;
 
-                // Recharge Echo Energy
                 if (this.echoEnergy < this.maxEchoEnergy) {
-                    this.echoEnergy = Math.min(this.maxEchoEnergy, this.echoEnergy + 0.18);
+                    this.echoEnergy = Math.min(this.maxEchoEnergy, this.echoEnergy + diff.energyRegen);
                 }
 
-                // Record state history for Temporal Echoes
+                const wantsToShoot = keys['MouseLeft'] || touchAimVec.active || (touchModeActive && mobileAutoFire && enemies.length > 0);
+
                 playerHistory.push({
                     x: this.x,
                     y: this.y,
-                    angle: Math.atan2(mouseY - this.y, mouseX - this.x),
-                    shooting: keys['MouseLeft'] && this.shootCooldown === 0
+                    angle: this.facingAngle,
+                    shooting: wantsToShoot && this.shootCooldown === 0
                 });
 
                 if (playerHistory.length > maxHistoryFrames) {
                     playerHistory.shift();
                 }
 
-                if (keys['MouseLeft'] && this.shootCooldown === 0) {
+                if (wantsToShoot && this.shootCooldown === 0) {
                     this.shoot();
                 }
             }
 
             shoot() {
-                const angle = Math.atan2(mouseY - this.y, mouseX - this.x);
+                const angle = this.facingAngle;
                 const hasDual = UPGRADES.find(u => u.id === 'dualBlasters').level > 0;
 
                 if (hasDual) {
@@ -786,13 +752,12 @@
             }
 
             draw() {
-                const angle = Math.atan2(mouseY - this.y, mouseX - this.x);
+                const angle = this.facingAngle;
 
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(angle);
 
-                // Shield Aura
                 if (this.shieldTimer > 0) {
                     ctx.strokeStyle = '#10b981';
                     ctx.lineWidth = 4;
@@ -803,13 +768,11 @@
                     ctx.stroke();
                 }
 
-                // Dash Effect
                 if (this.dashTimer > 0) {
                     ctx.shadowColor = '#38bdf8';
                     ctx.shadowBlur = 25;
                 }
 
-                // Ship Body
                 ctx.shadowColor = '#00f3ff';
                 ctx.shadowBlur = 15;
                 ctx.fillStyle = '#00f3ff';
@@ -821,7 +784,6 @@
                 ctx.closePath();
                 ctx.fill();
 
-                // Core Thruster Glow
                 ctx.fillStyle = '#ff007f';
                 ctx.beginPath();
                 ctx.arc(-this.radius * 0.6, 0, 5, 0, Math.PI * 2);
@@ -885,11 +847,11 @@
 
         // --- Projectile Class ---
         class Projectile {
-            constructor(x, y, angle, color, isFriendly) {
+            constructor(x, y, angle, color, isFriendly, customSpeed = null) {
                 this.x = x;
                 this.y = y;
                 this.angle = angle;
-                this.speed = isFriendly ? 12 : 6;
+                this.speed = customSpeed !== null ? customSpeed : (isFriendly ? 12 : 6);
                 this.color = color;
                 this.isFriendly = isFriendly;
                 this.radius = 4;
@@ -920,20 +882,25 @@
         // --- Enemy Class ---
         class Enemy {
             constructor(type, x, y) {
-                this.type = type; // 'DRONE', 'STALKER', 'BOSS'
+                const diff = DIFFICULTY_CONFIGS[currentDifficulty];
+                this.type = type;
                 this.x = x;
                 this.y = y;
                 this.radius = type === 'DRONE' ? 14 : (type === 'STALKER' ? 18 : 55);
-                this.hp = type === 'DRONE' ? 20 : (type === 'STALKER' ? 45 : 650);
+                const baseHp = type === 'DRONE' ? 20 : (type === 'STALKER' ? 45 : 650);
+                const baseSpeed = type === 'DRONE' ? 2.8 : (type === 'STALKER' ? 1.8 : 0.8);
+                this.hp = Math.round(baseHp * diff.enemyHpMult);
                 this.maxHp = this.hp;
-                this.speed = type === 'DRONE' ? 2.8 : (type === 'STALKER' ? 1.8 : 0.8);
+                this.speed = baseSpeed * diff.enemySpeedMult;
                 this.color = type === 'DRONE' ? '#a855f7' : (type === 'STALKER' ? '#ef4444' : '#fbbf24');
                 this.stasisTimer = 0;
-                this.shootCooldown = 0;
+                this.shootCooldown = type === 'BOSS' ? diff.bossCooldown : Math.floor(60 + Math.random() * 80);
+                this.vortexCooldown = 140;
                 this.markedForDeletion = false;
             }
 
             update() {
+                const diff = DIFFICULTY_CONFIGS[currentDifficulty];
                 if (this.stasisTimer > 0) {
                     this.stasisTimer--;
                     return;
@@ -954,13 +921,61 @@
                 this.x += Math.cos(angle) * this.speed;
                 this.y += Math.sin(angle) * this.speed;
 
-                // Boss attack patterns
+                if (this.type === 'DRONE' && currentDifficulty === 'ULTRA_INSANE') {
+                    if (this.shootCooldown-- <= 0) {
+                        projectiles.push(new Projectile(this.x, this.y, angle, '#e879f9', false, 6.2));
+                        this.shootCooldown = 145;
+                    }
+                }
+
+                if (this.type === 'STALKER' && (currentDifficulty === 'INSANE' || currentDifficulty === 'ULTRA_INSANE')) {
+                    if (this.shootCooldown-- <= 0) {
+                        if (currentDifficulty === 'ULTRA_INSANE') {
+                            [-0.22, 0, 0.22].forEach(spread => {
+                                projectiles.push(new Projectile(this.x, this.y, angle + spread, '#f43f5e', false, 7.2));
+                            });
+                            this.shootCooldown = 75;
+                        } else {
+                            projectiles.push(new Projectile(this.x, this.y, angle, '#f87171', false, 6.8));
+                            this.shootCooldown = 95;
+                        }
+                    }
+                }
+
                 if (this.type === 'BOSS') {
                     if (this.shootCooldown-- <= 0) {
-                        for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-                            projectiles.push(new Projectile(this.x, this.y, a, '#fbbf24', false));
+                        if (currentDifficulty === 'ULTRA_INSANE') {
+                            bossSpiralOffset += 0.28;
+                            const steps = 20;
+                            for (let i = 0; i < steps; i++) {
+                                const a1 = bossSpiralOffset + (i * Math.PI * 2) / steps;
+                                const a2 = -bossSpiralOffset + (i * Math.PI * 2) / steps;
+                                projectiles.push(new Projectile(this.x, this.y, a1, '#e879f9', false, 6.8));
+                                projectiles.push(new Projectile(this.x, this.y, a2, '#fbbf24', false, 5.2));
+                            }
+                        } else if (currentDifficulty === 'INSANE') {
+                            bossSpiralOffset += 0.25;
+                            const steps = 16;
+                            for (let i = 0; i < steps; i++) {
+                                const a = bossSpiralOffset + (i * Math.PI * 2) / steps;
+                                projectiles.push(new Projectile(this.x, this.y, a, '#fbbf24', false, 6.5));
+                            }
+                        } else {
+                            const step = currentDifficulty === 'HARD' ? Math.PI / 6 : Math.PI / 4;
+                            for (let a = 0; a < Math.PI * 2; a += step) {
+                                projectiles.push(new Projectile(this.x, this.y, a, '#fbbf24', false));
+                            }
                         }
-                        this.shootCooldown = 80;
+                        this.shootCooldown = diff.bossCooldown;
+                    }
+
+                    if (currentDifficulty === 'ULTRA_INSANE') {
+                        if (this.vortexCooldown-- <= 0) {
+                            const pullAngle = Math.atan2(this.y - player.y, this.x - player.x);
+                            player.x = Math.max(player.radius, Math.min(CANVAS_WIDTH - player.radius, player.x + Math.cos(pullAngle) * 1.4));
+                            player.y = Math.max(player.radius, Math.min(CANVAS_HEIGHT - player.radius, player.y + Math.sin(pullAngle) * 1.4));
+                            if (this.vortexCooldown < -45) this.vortexCooldown = 140;
+                        }
                     }
                 }
             }
@@ -976,7 +991,6 @@
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Boss Health Bar ring
                     ctx.strokeStyle = '#ffffff';
                     ctx.lineWidth = 4;
                     ctx.beginPath();
@@ -1003,13 +1017,15 @@
 
             update() {
                 const dist = Math.hypot(player.x - this.x, player.y - this.y);
-                if (dist < 120) {
+                if (dist < 135) {
                     const angle = Math.atan2(player.y - this.y, player.x - this.x);
-                    this.x += Math.cos(angle) * 6;
-                    this.y += Math.sin(angle) * 6;
+                    this.x += Math.cos(angle) * 6.5;
+                    this.y += Math.sin(angle) * 6.5;
                 }
                 if (dist < player.radius + this.radius) {
-                    nexusDust += 1;
+                    const reward = DIFFICULTY_CONFIGS[currentDifficulty].dustMultiplier;
+                    nexusDust += reward;
+                    runDustEarned += reward;
                     localStorage.setItem('aether_dust', nexusDust);
                     document.getElementById('dustText').textContent = nexusDust;
                     audio.playPickup();
@@ -1066,9 +1082,9 @@
             }
         }
 
-        // --- Temporal Echo Rewind Trigger ---
+        // --- Temporal Echo & Abilities ---
         function triggerEchoRewind() {
-            if (player.echoEnergy < 50 || playerHistory.length < 30) return;
+            if (!player || player.echoEnergy < 50 || playerHistory.length < 30) return;
 
             player.echoEnergy -= 50;
             audio.playEchoRewind();
@@ -1084,6 +1100,7 @@
         }
 
         function triggerStasisBlast() {
+            if (!player) return;
             const upg = UPGRADES.find(u => u.id === 'stasisBlast');
             if (!upg || upg.level === 0 || player.stasisCooldown > 0) return;
 
@@ -1094,6 +1111,7 @@
         }
 
         function triggerAegisShield() {
+            if (!player) return;
             const upg = UPGRADES.find(u => u.id === 'shieldGen');
             if (!upg || upg.level === 0 || player.shieldTimer > 0) return;
 
@@ -1102,6 +1120,7 @@
         }
 
         function triggerDashPulse() {
+            if (!player) return;
             const upg = UPGRADES.find(u => u.id === 'dashPulse');
             if (!upg || upg.level === 0 || player.dashTimer > 0) return;
 
@@ -1112,14 +1131,28 @@
 
         // --- Wave & Enemy Spawner ---
         function spawnWave() {
+            const diff = DIFFICULTY_CONFIGS[currentDifficulty];
             enemies = [];
             if (gameMode === 'CAMPAIGN' && currentWave === 5) {
                 enemies.push(new Enemy('BOSS', CANVAS_WIDTH / 2, 120));
-                document.getElementById('waveText').textContent = "⚠️ BOSS ENTITY ENGAGED";
+                if (currentDifficulty === 'INSANE' || currentDifficulty === 'ULTRA_INSANE') {
+                    enemies.push(new Enemy('STALKER', CANVAS_WIDTH * 0.25, 90));
+                    enemies.push(new Enemy('STALKER', CANVAS_WIDTH * 0.75, 90));
+                }
+                if (currentDifficulty === 'ULTRA_INSANE') {
+                    enemies.push(new Enemy('STALKER', CANVAS_WIDTH * 0.15, 160));
+                    enemies.push(new Enemy('STALKER', CANVAS_WIDTH * 0.85, 160));
+                }
+                const bossWaveLabel = currentDifficulty === 'ULTRA_INSANE'
+                    ? '☠️ APOCALYPSE OVERLORD + 4 ESCORTS'
+                    : (currentDifficulty === 'INSANE' ? '☠️ OVERLORD BOSS + ESCORTS' : '⚠️ BOSS ENTITY ENGAGED');
+                document.getElementById('waveText').textContent = bossWaveLabel;
+                document.getElementById('mobileWaveText').textContent = bossWaveLabel;
                 return;
             }
 
-            const count = 4 + currentWave * 3;
+            const baseCount = 4 + currentWave * 3;
+            const count = Math.max(2, Math.round(baseCount * diff.spawnCountMult));
             for (let i = 0; i < count; i++) {
                 const side = Math.floor(Math.random() * 4);
                 let x = 0, y = 0;
@@ -1132,15 +1165,32 @@
                 enemies.push(new Enemy(type, x, y));
             }
 
-            document.getElementById('waveText').textContent = `SECTOR WAVE ${currentWave}/5`;
+            const waveLabel = gameMode === 'CAMPAIGN'
+                ? `SECTOR WAVE ${currentWave}/5`
+                : `SURVIVAL WAVE ${currentWave}`;
+            document.getElementById('waveText').textContent = waveLabel;
+            document.getElementById('mobileWaveText').textContent = waveLabel;
         }
 
         function resetGame(mode) {
+            const diff = DIFFICULTY_CONFIGS[currentDifficulty];
             gameMode = mode;
             currentRealm = 1;
             currentWave = 1;
             killCount = 0;
             echoCount = 0;
+            runDustEarned = 0;
+            isPaused = false;
+            document.getElementById('pauseBtn').textContent = 'PAUSE';
+            document.getElementById('realmTitle').textContent = 'REALM I: CHRONO VOID';
+
+            const badge = document.getElementById('difficultyHudBadge');
+            badge.textContent = diff.hudBadge;
+            badge.className = `text-[10px] font-orbitron font-bold px-2 py-0.5 rounded border ${diff.badgeClass}`;
+
+            const mobileBadge = document.getElementById('mobileDifficultyBadge');
+            mobileBadge.textContent = diff.hudBadge;
+            mobileBadge.className = `text-[9px] font-orbitron font-bold px-2 py-0.5 rounded border ${diff.badgeClass}`;
 
             player = new Player();
             playerHistory = [];
@@ -1152,6 +1202,7 @@
 
             const ext = UPGRADES.find(u => u.id === 'echoDuration').level;
             maxHistoryFrames = 300 + ext * 120;
+            document.getElementById('historyWindowLabel').textContent = `${(maxHistoryFrames / 60).toFixed(1)}s HISTORY`;
 
             document.getElementById('hpBar').style.width = '100%';
             document.getElementById('echoEnergyBar').style.width = '100%';
@@ -1163,6 +1214,7 @@
 
         function update() {
             if (!isRunning || isPaused) return;
+            const diff = DIFFICULTY_CONFIGS[currentDifficulty];
 
             player.update();
 
@@ -1190,8 +1242,11 @@
 
                 if (Math.hypot(e.x - player.x, e.y - player.y) < e.radius + player.radius) {
                     if (player.shieldTimer <= 0 && player.dashTimer <= 0) {
-                        player.hp -= 0.8;
-                        if (player.hp <= 0) gameOver();
+                        player.hp -= 0.8 * diff.enemyDamageMult;
+                        if (player.hp <= 0) {
+                            gameOver();
+                            return;
+                        }
                     }
                 }
 
@@ -1212,8 +1267,12 @@
                         }
                     } else if (!p.isFriendly && Math.hypot(player.x - p.x, player.y - p.y) < player.radius + p.radius) {
                         if (player.shieldTimer <= 0 && player.dashTimer <= 0) {
-                            player.hp -= 10;
-                            if (player.hp <= 0) gameOver();
+                            player.hp -= 10 * diff.enemyDamageMult;
+                            if (player.hp <= 0) {
+                                projectiles.splice(j, 1);
+                                gameOver();
+                                return;
+                            }
                         }
                         projectiles.splice(j, 1);
                     }
@@ -1225,6 +1284,8 @@
                 if (currentWave > 5 && gameMode === 'CAMPAIGN') {
                     currentRealm++;
                     currentWave = 1;
+                    const realmNames = ['REALM I: CHRONO VOID', 'REALM II: AETHER RIFT', 'REALM III: SINGULARITY CORE', 'REALM IV: OMEGA NEXUS'];
+                    document.getElementById('realmTitle').textContent = realmNames[(currentRealm - 1) % realmNames.length];
                 }
                 spawnWave();
             }
@@ -1235,17 +1296,19 @@
             }
 
             document.getElementById('hpText').textContent = `${Math.ceil(Math.max(0, player.hp))}/${player.maxHp}`;
-            document.getElementById('hpBar').style.width = `${(player.hp / player.maxHp) * 100}%`;
+            document.getElementById('hpBar').style.width = `${(Math.max(0, player.hp) / player.maxHp) * 100}%`;
             document.getElementById('echoEnergyText').textContent = `${Math.floor(player.echoEnergy)}%`;
             document.getElementById('echoEnergyBar').style.width = `${(player.echoEnergy / player.maxEchoEnergy) * 100}%`;
             document.getElementById('timelineScrubber').style.width = `${(playerHistory.length / maxHistoryFrames) * 100}%`;
         }
 
         function render() {
-            ctx.fillStyle = '#020205';
+            ctx.fillStyle = currentDifficulty === 'ULTRA_INSANE' ? '#09010b' : (currentDifficulty === 'INSANE' ? '#080105' : '#020205');
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-            ctx.strokeStyle = 'rgba(0, 243, 255, 0.05)';
+            ctx.strokeStyle = currentDifficulty === 'ULTRA_INSANE'
+                ? 'rgba(232, 121, 249, 0.08)'
+                : (currentDifficulty === 'INSANE' ? 'rgba(239, 68, 68, 0.07)' : 'rgba(0, 243, 255, 0.05)');
             ctx.lineWidth = 1;
             for (let x = 0; x < CANVAS_WIDTH; x += 40) {
                 ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, CANVAS_HEIGHT); ctx.stroke();
@@ -1260,6 +1323,17 @@
             temporalEchoes.forEach(echo => echo.draw());
             if (player) player.draw();
             particles.forEach(p => p.draw());
+
+            if (isPaused && isRunning && !adSDK.adActive) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(2, 2, 5, 0.65)';
+                ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+                ctx.fillStyle = '#00f3ff';
+                ctx.font = '900 38px Orbitron, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('SIMULATION PAUSED', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+                ctx.restore();
+            }
         }
 
         function gameLoop() {
@@ -1270,9 +1344,11 @@
 
         function gameOver() {
             isRunning = false;
+            const diff = DIFFICULTY_CONFIGS[currentDifficulty];
+            document.getElementById('finalDifficultyText').textContent = diff.label;
             document.getElementById('finalKillsText').textContent = killCount;
             document.getElementById('finalEchoesText').textContent = echoCount;
-            document.getElementById('finalDustText').textContent = `+${killCount * 2} ✨`;
+            document.getElementById('finalDustText').textContent = `+${runDustEarned} ✨`;
 
             adSDK.showInterstitial(() => {
                 document.getElementById('mainMenuView').classList.add('hidden');
@@ -1305,13 +1381,13 @@
 
             UPGRADES.forEach(u => {
                 const item = document.createElement('div');
-                item.className = 'glass-panel p-3 rounded-xl flex justify-between items-center border-slate-700';
+                item.className = 'glass-panel p-3 rounded-xl flex justify-between items-center border-slate-700 text-left';
                 item.innerHTML = `
                     <div>
                         <div class="text-xs font-bold font-orbitron text-amber-300">${u.title} (${u.level}/${u.max})</div>
                         <div class="text-[10px] text-slate-400 font-mono">${u.desc}</div>
                     </div>
-                    <button class="buy-upgrade-btn px-3 py-1.5 rounded-lg font-orbitron text-xs font-bold ${u.level >= u.max ? 'bg-slate-800 text-slate-500' : 'bg-amber-400 text-slate-950 hover:bg-amber-300'}" data-id="${u.id}">
+                    <button class="buy-upgrade-btn px-3 py-1.5 rounded-lg font-orbitron text-xs font-bold shrink-0 ml-2 ${u.level >= u.max ? 'bg-slate-800 text-slate-500' : 'bg-amber-400 text-slate-950 hover:bg-amber-300'}" data-id="${u.id}">
                         ${u.level >= u.max ? 'MAX' : `✨ ${u.cost}`}
                     </button>
                 `;
@@ -1340,22 +1416,106 @@
         });
 
         window.addEventListener('mousedown', e => {
-            if (e.button === 0) keys['MouseLeft'] = true;
+            if (e.button === 0 && e.target === canvas) keys['MouseLeft'] = true;
         });
 
         window.addEventListener('mouseup', e => {
             if (e.button === 0) keys['MouseLeft'] = false;
         });
 
+        canvas.addEventListener('touchstart', e => {
+            if (!isRunning || isPaused) return;
+            e.preventDefault();
+            audio.init();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            mouseX = (touch.clientX - rect.left) * (CANVAS_WIDTH / rect.width);
+            mouseY = (touch.clientY - rect.top) * (CANVAS_HEIGHT / rect.height);
+            keys['MouseLeft'] = true;
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', e => {
+            if (!isRunning || isPaused) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            mouseX = (touch.clientX - rect.left) * (CANVAS_WIDTH / rect.width);
+            mouseY = (touch.clientY - rect.top) * (CANVAS_HEIGHT / rect.height);
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', () => {
+            keys['MouseLeft'] = false;
+        });
+
         window.addEventListener('keydown', e => {
             keys[e.code] = true;
-            if (e.code === 'Space') triggerEchoRewind();
+            if (e.code === 'KeyP' || e.code === 'Escape') {
+                if (isRunning && !adSDK.adActive) {
+                    isPaused = !isPaused;
+                    document.getElementById('pauseBtn').textContent = isPaused ? 'RESUME' : 'PAUSE';
+                }
+                return;
+            }
+            if (!isRunning || isPaused) return;
+            if (e.code === 'Space') {
+                e.preventDefault();
+                triggerEchoRewind();
+            }
             if (e.code === 'KeyE') triggerStasisBlast();
             if (e.code === 'KeyQ') triggerAegisShield();
             if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') triggerDashPulse();
         });
 
         window.addEventListener('keyup', e => { keys[e.code] = false; });
+
+        document.getElementById('pauseBtn').addEventListener('click', (e) => {
+            if (!isRunning || adSDK.adActive) return;
+            isPaused = !isPaused;
+            e.target.textContent = isPaused ? 'RESUME' : 'PAUSE';
+        });
+
+        function updateTouchDeckVisibility() {
+            const deck = document.getElementById('mobileControls');
+            const toggleBtn = document.getElementById('touchToggleBtn');
+            if (forceTouchControls) {
+                deck.classList.remove('md:hidden');
+                deck.classList.add('flex');
+                toggleBtn.classList.add('border-cyan-400', 'text-cyan-300');
+            } else {
+                deck.classList.add('md:hidden');
+                toggleBtn.classList.remove('border-cyan-400', 'text-cyan-300');
+            }
+        }
+
+        document.getElementById('touchToggleBtn').addEventListener('click', () => {
+            forceTouchControls = !forceTouchControls;
+            updateTouchDeckVisibility();
+        });
+
+        if (isTouchDevice) {
+            forceTouchControls = true;
+            updateTouchDeckVisibility();
+        }
+
+        document.querySelectorAll('.diff-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentDifficulty = btn.getAttribute('data-diff');
+                document.querySelectorAll('.diff-btn').forEach(b => {
+                    const isUltra = b.getAttribute('data-diff') === 'ULTRA_INSANE';
+                    b.className = `diff-btn ${isUltra ? 'col-span-2 ' : ''}py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-bold border border-slate-700 bg-slate-900/80 text-slate-400 transition-all`;
+                });
+
+                const activeStyles = {
+                    EASY: 'diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-extrabold border border-emerald-400 bg-emerald-950/60 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.25)] transition-all',
+                    NORMAL: 'diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-extrabold border border-cyan-400 bg-cyan-950/60 text-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.25)] transition-all',
+                    HARD: 'diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-extrabold border border-pink-500 bg-pink-950/60 text-pink-300 shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all',
+                    INSANE: 'diff-btn py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-extrabold border border-red-500 bg-red-950/70 text-amber-300 shadow-[0_0_18px_rgba(239,68,68,0.45)] transition-all',
+                    ULTRA_INSANE: 'diff-btn col-span-2 py-2 sm:py-2.5 px-2 rounded-xl font-orbitron text-[10px] sm:text-[11px] font-extrabold border border-fuchsia-400 bg-fuchsia-950/80 text-fuchsia-200 shadow-[0_0_22px_rgba(232,121,249,0.6)] transition-all'
+                };
+                btn.className = activeStyles[currentDifficulty];
+                document.getElementById('difficultyDesc').textContent = DIFFICULTY_CONFIGS[currentDifficulty].desc;
+            });
+        });
 
         document.getElementById('startCampaignBtn').addEventListener('click', () => {
             audio.init();
@@ -1370,8 +1530,15 @@
         });
 
         document.getElementById('retryBtn').addEventListener('click', () => {
+            document.getElementById('gameOverView').classList.add('hidden');
+            document.getElementById('mainMenuView').classList.remove('hidden');
             resetGame(gameMode);
             isRunning = true;
+        });
+
+        document.getElementById('mainMenuFromGameOverBtn').addEventListener('click', () => {
+            document.getElementById('gameOverView').classList.add('hidden');
+            document.getElementById('mainMenuView').classList.remove('hidden');
         });
 
         document.getElementById('openUpgradesBtn').addEventListener('click', () => {
@@ -1397,26 +1564,126 @@
 
         document.getElementById('soundToggleBtn').addEventListener('click', (e) => {
             audio.enabled = !audio.enabled;
-            e.target.textContent = audio.enabled ? '🔊 Audio' : '🔇 Muted';
+            e.target.textContent = audio.enabled ? '🔊' : '🔇';
+            if (audio.bgGain && audio.ctx) {
+                audio.bgGain.gain.setValueAtTime(audio.enabled ? 0.03 : 0, audio.ctx.currentTime);
+            }
         });
 
-        document.getElementById('pauseBtn').addEventListener('click', (e) => {
-            if (!isRunning) return;
-            isPaused = !isPaused;
-            e.target.textContent = isPaused ? 'RESUME' : 'PAUSE';
+        function bindVirtualJoystick(zoneEl, stickEl, onUpdate, onRelease) {
+            let activeTouchId = null;
+
+            function updateStick(clientX, clientY) {
+                const rect = zoneEl.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const maxDist = rect.width / 2 - 18;
+                let dx = clientX - cx;
+                let dy = clientY - cy;
+                const dist = Math.hypot(dx, dy);
+                if (dist > maxDist) {
+                    dx = (dx / dist) * maxDist;
+                    dy = (dy / dist) * maxDist;
+                }
+                stickEl.style.transform = `translate(${dx}px, ${dy}px)`;
+                onUpdate(dx / maxDist, dy / maxDist);
+            }
+
+            zoneEl.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                audio.init();
+                if (activeTouchId === null && e.changedTouches.length > 0) {
+                    const t = e.changedTouches[0];
+                    activeTouchId = t.identifier;
+                    updateStick(t.clientX, t.clientY);
+                }
+            }, { passive: false });
+
+            zoneEl.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const t = e.changedTouches[i];
+                    if (t.identifier === activeTouchId) {
+                        updateStick(t.clientX, t.clientY);
+                        break;
+                    }
+                }
+            }, { passive: false });
+
+            function handleEnd(e) {
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    if (e.changedTouches[i].identifier === activeTouchId) {
+                        activeTouchId = null;
+                        stickEl.style.transform = 'translate(0px, 0px)';
+                        onRelease();
+                        break;
+                    }
+                }
+            }
+
+            zoneEl.addEventListener('touchend', handleEnd);
+            zoneEl.addEventListener('touchcancel', handleEnd);
+        }
+
+        bindVirtualJoystick(
+            document.getElementById('joystickMove'),
+            document.getElementById('joystickStick'),
+            (nx, ny) => {
+                touchMoveVec.x = nx;
+                touchMoveVec.y = ny;
+            },
+            () => {
+                touchMoveVec.x = 0;
+                touchMoveVec.y = 0;
+            }
+        );
+
+        bindVirtualJoystick(
+            document.getElementById('joystickAim'),
+            document.getElementById('joystickAimStick'),
+            (nx, ny) => {
+                touchAimVec.x = nx;
+                touchAimVec.y = ny;
+                touchAimVec.active = true;
+            },
+            () => {
+                touchAimVec.x = 0;
+                touchAimVec.y = 0;
+                touchAimVec.active = false;
+            }
+        );
+
+        document.getElementById('touchAutoFireBtn').addEventListener('click', (e) => {
+            mobileAutoFire = !mobileAutoFire;
+            e.target.textContent = mobileAutoFire ? 'AUTO-FIRE: ON' : 'AUTO-FIRE: OFF';
+            e.target.className = mobileAutoFire
+                ? 'px-3 py-2 bg-cyan-950/90 border border-cyan-400 rounded-xl text-cyan-300 font-orbitron font-extrabold text-[10px] shadow-[0_0_12px_rgba(0,243,255,0.3)] active:scale-95 transition'
+                : 'px-3 py-2 bg-slate-900/90 border border-slate-600 rounded-xl text-slate-400 font-orbitron font-extrabold text-[10px] active:scale-95 transition';
         });
 
         document.getElementById('touchEchoBtn').addEventListener('touchstart', (e) => {
             e.preventDefault();
             triggerEchoRewind();
-        });
+        }, { passive: false });
+
+        document.getElementById('touchDashBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            triggerDashPulse();
+        }, { passive: false });
 
         document.getElementById('touchAbilityBtn').addEventListener('touchstart', (e) => {
             e.preventDefault();
             triggerStasisBlast();
-        });
+        }, { passive: false });
 
-        requestAnimationFrame(gameLoop);
+        document.getElementById('touchShieldBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            triggerAegisShield();
+        }, { passive: false });
+
+        window.onload = function () {
+            requestAnimationFrame(gameLoop);
+        };
     </script>
 </body>
 </html>
