@@ -6,6 +6,20 @@
     <title>AETHER ECHOES: QUANTUM NEXUS - REMASTERED</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google AdSense for Games (H5 Games Ads) -->
+    <!-- TODO: Replace ca-pub-XXXXXXXXXXXXXXXX with your real Google AdSense Publisher ID -->
+    <script async
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-adbreak-test="on"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+        crossorigin="anonymous">
+    </script>
+    <script>
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adBreak = window.adConfig = function(o) { adsbygoogle.push(o); };
+        adConfig({ preloadAdBreaks: 'on', sound: 'on' });
+    </script>
     <style>
         * {
             box-sizing: border-box;
@@ -430,20 +444,101 @@
 
         const audio = new QuantumAudioEngine();
 
-        // --- Ad SDK Manager Framework ---
+        // --- Google H5 Games Ads (AdSense Ad Placement API) Manager ---
         class AdManagerSDK {
             constructor() {
                 this.adActive = false;
                 this.adTimer = null;
                 this.onCompleteCallback = null;
+                this.publisherId = "ca-pub-XXXXXXXXXXXXXXXX"; // Replace with your real AdSense ID
+            }
+
+            isGoogleH5Ready() {
+                return (
+                    typeof window.adBreak === 'function' &&
+                    this.publisherId !== "ca-pub-XXXXXXXXXXXXXXXX"
+                );
+            }
+
+            muteGameAudio(shouldMute) {
+                if (audio.bgGain && audio.ctx) {
+                    const targetGain = (!shouldMute && audio.enabled) ? 0.03 : 0;
+                    audio.bgGain.gain.setValueAtTime(targetGain, audio.ctx.currentTime);
+                }
             }
 
             showInterstitial(onComplete) {
-                this.startAd("QUANTUM NEXUS - PREVIEW", "Experience high-octane synthwave action across multi-realms!", 2, false, onComplete);
+                if (this.isGoogleH5Ready()) {
+                    let completed = false;
+                    const finish = () => {
+                        if (completed) return;
+                        completed = true;
+                        this.adActive = false;
+                        this.muteGameAudio(false);
+                        if (onComplete) onComplete(true);
+                    };
+
+                    window.adBreak({
+                        type: 'next',
+                        name: 'game-over-interstitial',
+                        beforeAd: () => {
+                            this.adActive = true;
+                            if (isRunning && !isPaused) isPaused = true;
+                            this.muteGameAudio(true);
+                        },
+                        afterAd: () => {
+                            finish();
+                        },
+                        adBreakDone: () => {
+                            finish();
+                        }
+                    });
+                } else {
+                    // Fallback simulation when testing locally before AdSense approval
+                    this.startAd("GOOGLE H5 INTERSTITIAL (TEST)", "Replace ca-pub-XXXXXXXXXXXXXXXX with your AdSense ID to serve live ads.", 2, false, onComplete);
+                }
             }
 
             showRewarded(onRewardGiven) {
-                this.startAd("NEXUS CORE REGENERATOR", "Recharging hull matrices +50 Nexus Dust!", 3, true, onRewardGiven);
+                if (this.isGoogleH5Ready()) {
+                    let rewardGranted = false;
+                    let completed = false;
+                    const finish = () => {
+                        if (completed) return;
+                        completed = true;
+                        this.adActive = false;
+                        this.muteGameAudio(false);
+                        if (onRewardGiven) onRewardGiven(rewardGranted);
+                    };
+
+                    window.adBreak({
+                        type: 'reward',
+                        name: 'revive-and-50-dust',
+                        beforeAd: () => {
+                            this.adActive = true;
+                            if (isRunning && !isPaused) isPaused = true;
+                            this.muteGameAudio(true);
+                        },
+                        beforeReward: (showAdFn) => {
+                            showAdFn();
+                        },
+                        adDismissed: () => {
+                            rewardGranted = false;
+                        },
+                        adViewed: () => {
+                            rewardGranted = true;
+                        },
+                        afterAd: () => {
+                            finish();
+                        },
+                        adBreakDone: () => {
+                            finish();
+                        }
+                    });
+                } else {
+                    // Fallback simulation when testing locally before AdSense approval
+                    this.startAd("GOOGLE H5 REWARDED AD (TEST)", "Simulating rewarded ad: +50 Nexus Dust & Hull Revive!", 3, true, onRewardGiven);
+                }
             }
 
             startAd(title, desc, durationSec, isRewarded, callback) {
